@@ -30,14 +30,18 @@ public class Errand extends Task {
         this.hasBeenCompleted = false;
     }
 
-    // EFFECTS: Creates a new errand with the given title which has not been completed
+    // REQUIRES: title string length must be larger than 0
+    // MODIFIES: this
+    // EFFECTS : Creates a new errand with the given title which has not been completed
     public Errand(String title) {
         super(title);
         this.hasBeenCompleted = false;
     }
 
-    // EFFECTS: Creates a new errand with the given title, and complete by date,
-    //          which has not been completed
+    // REQUIRES: title string length must be larger than 0
+    // MODIFIES: this
+    // EFFECTS : Creates a new errand with the given title, and complete by date,
+    //           which has not been completed
     public Errand(String title, LocalDate completeByDate) {
         super(title, "", completeByDate);
         this.hasBeenCompleted = false;

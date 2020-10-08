@@ -37,7 +37,7 @@ public abstract class Task {
     // score > 0
     private int points;
 
-    // Title of a task
+    // Title of a task, length must be >0
     private String title;
 
     // Description of the task
@@ -46,8 +46,9 @@ public abstract class Task {
     // Date the task should be completed on or by
     private LocalDate completeByDate;
 
-    // EFFECTS: Instantiates a new Task with an unnamed title, the minimum number of points,
-    //          an empty description, and a complete by date of today
+    // MODIFIES: this
+    // EFFECTS : Instantiates a new Task with an unnamed title, the minimum number of points,
+    //           an empty description, and a complete by date of today
     public Task() {
         this.points = Task.MIN_POINTS;
         this.title = "Untitled Task";
@@ -55,8 +56,10 @@ public abstract class Task {
         this.completeByDate = LocalDate.now();
     }
 
-    // EFFECTS: Instantiates a new Task with the given title, the minimum number of points,
-    //          an empty description, and a complete by date of today
+    // REQUIRES: title string length must be larger than 0
+    // MODIFIES: this
+    // EFFECTS : Instantiates a new Task with the given title, the minimum number of points,
+    //           an empty description, and a complete by date of today
     public Task(String title) {
         this.points = Task.MIN_POINTS;
         this.title = title;
@@ -64,8 +67,10 @@ public abstract class Task {
         this.completeByDate = LocalDate.now();
     }
 
-    // EFFECTS: Instantiates a new Task with the given title, the minimum number of points,
-    //          the given description, and a complete by date of today
+    // REQUIRES: title string length must be larger than 0
+    // MODIFIES: this
+    // EFFECTS : Instantiates a new Task with the given title, the minimum number of points,
+    //           the given description, and a complete by date of today
     public Task(String title, String description) {
         this.points = Task.MIN_POINTS;
         this.title = title;
@@ -73,7 +78,9 @@ public abstract class Task {
         this.completeByDate = LocalDate.now();
     }
 
-    // EFFECTS: Instantiates a new Task with the given title, the minimum number of points,
+    // REQUIRES: title string length must be larger than 0
+    // MODIFIES: this
+    // EFFECTS : Instantiates a new Task with the given title, the minimum number of points,
     //          the given description, and a complete by date of today
     public Task(String title, String description, LocalDate completeByDate) {
         this.points = Task.MIN_POINTS;

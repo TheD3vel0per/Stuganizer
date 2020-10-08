@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDate;
+
 /**
  * A task is a core part of this application. It defines something that a user has
  * to do. It's an abstract class because there may be different kinds of tasks, and
@@ -13,6 +15,9 @@ package model;
  * Each task also has a title and description. The title of a task defines in short
  * words what the task is, and the description holds more information about the
  * task, if the user would like to add more information.
+ *
+ * Finally, tasks have a complete by date. Which specify the date the the task
+ * should be completed on or by.
  *
  * Staging tasks works different depending on the kind of task, so no information
  * about whether a task is complete or not is defined immediately. Some tasks may
@@ -38,12 +43,43 @@ public abstract class Task {
     // Description of the task
     private String description;
 
-    // EFFECTS: Instantiates a new class with an unnamed title, the minimum number of points
-    //          and an empty description
+    // Date the task should be completed on or by
+    private LocalDate completeByDate;
+
+    // EFFECTS: Instantiates a new Task with an unnamed title, the minimum number of points,
+    //          an empty description, and a complete by date of today
     public Task() {
-        this.points = 0;
-        this.title = "Unnamed Task";
+        this.points = Task.MIN_POINTS;
+        this.title = "Untitled Task";
         this.description = "";
+        this.completeByDate = LocalDate.now();
+    }
+
+    // EFFECTS: Instantiates a new Task with the given title, the minimum number of points,
+    //          an empty description, and a complete by date of today
+    public Task(String title) {
+        this.points = Task.MIN_POINTS;
+        this.title = title;
+        this.description = "";
+        this.completeByDate = LocalDate.now();
+    }
+
+    // EFFECTS: Instantiates a new Task with the given title, the minimum number of points,
+    //          the given description, and a complete by date of today
+    public Task(String title, String description) {
+        this.points = Task.MIN_POINTS;
+        this.title = title;
+        this.description = description;
+        this.completeByDate = LocalDate.now();
+    }
+
+    // EFFECTS: Instantiates a new Task with the given title, the minimum number of points,
+    //          the given description, and a complete by date of today
+    public Task(String title, String description, LocalDate completeByDate) {
+        this.points = Task.MIN_POINTS;
+        this.title = title;
+        this.description = description;
+        this.completeByDate = completeByDate;
     }
 
     // EFFECTS: Returns the amount of points this task awards
@@ -59,6 +95,11 @@ public abstract class Task {
     // EFFECTS: Returns the description of the task as a string
     public String getDescription() {
         return this.description;
+    }
+
+    // EFFECTS: Return the complete by date
+    public LocalDate getCompleteByDate() {
+        return this.completeByDate;
     }
 
     // MODIFIES: this
@@ -81,9 +122,16 @@ public abstract class Task {
     }
 
     // MODIFIES: this
-    // EFFECTS: Sets a new description for the task
+    // EFFECTS : Sets a new description for the task
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    // REQUIRES: completeByDate must be the current date, or a date in the future
+    // MODIFIES: this
+    // EFFECTS : Sets the complete by date for the task
+    public void setCompleteByDate(LocalDate completeByDate) {
+        this.completeByDate = completeByDate;
     }
 
     // EFFECTS: Returns whether or not the task is complete

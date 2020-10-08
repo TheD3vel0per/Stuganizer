@@ -1,0 +1,101 @@
+package model;
+
+/**
+ * A task is a core part of this application. It defines something that a user has
+ * to do. It's an abstract class because there may be different kinds of tasks, and
+ * this is its base form.
+ *
+ * Each task awards a certain quantity of points, which may vary across various tasks,
+ * with more difficult tasks holding more points, and less intense tasks rewarding
+ * less points. The amount of points rewarded by a task is an integer in the
+ * domain of [MIN_POINTS,MIN_POINTS].
+ *
+ * Each task also has a title and description. The title of a task defines in short
+ * words what the task is, and the description holds more information about the
+ * task, if the user would like to add more information.
+ *
+ * Staging tasks works different depending on the kind of task, so no information
+ * about whether a task is complete or not is defined immediately. Some tasks may
+ * go instantly from to-do to done, while other might require reviewing, submitting,
+ * and other factor to be considered officially complete.
+ *
+ * Because of this, there is one method which must be overriden by each class
+ * that inherits `Task`. The method `percentageComplete` must return a floating point
+ * value which represents the percentage completed of a task.
+ */
+public abstract class Task {
+
+    public static int MIN_POINTS = 1;
+    public static int MAX_POINTS = 5;
+
+    // Specifies the quantity of point accomplished when doing this task
+    // score > 0
+    private int points;
+
+    // Title of a task
+    private String title;
+
+    // Description of the task
+    private String description;
+
+    // EFFECTS: Instantiates a new class with an unnamed title, the minimum number of points
+    //          and an empty description
+    public Task() {
+        this.points = 0;
+        this.title = "Unnamed Task";
+        this.description = "";
+    }
+
+    // EFFECTS: Returns the amount of points this task awards
+    public int getPoints() {
+        return this.points;
+    }
+
+    // EFFECTS: Returns the title of the task as a string
+    public String getTitle() {
+        return this.title;
+    }
+
+    // EFFECTS: Returns the description of the task as a string
+    public String getDescription() {
+        return this.description;
+    }
+
+    // MODIFIES: this
+    // EFFECTS : Sets the amount of points this task gets upon completion if points
+    //           is within the domain [MIN_POINTS, MAX_POINTS] and returns true,
+    //           otherwise returns false
+    public boolean setPoints(int points) {
+        if (MIN_POINTS >= points && points <= MAX_POINTS) {
+            this.points = points;
+            return true;
+        }
+        return false;
+    }
+
+    // REQUIRES: title string length must be larger than 0
+    // MODIFIES: this
+    // EFFECTS : Sets the title of the task
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Sets a new description for the task
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    // EFFECTS: Returns whether or not the task is complete
+    public boolean isComplete() {
+        return this.percentageComplete() == 1;
+    }
+
+    // EFFECTS: Returns the percentage of task completion as a floating point number
+    //          within the domain [0,1]
+    public float percentageComplete() {
+        // stub
+        return 0f;
+    }
+
+}

@@ -20,8 +20,8 @@ As a user I want to be able to ...
  * View what I have to do for the day
  * Add a task to my errands list
  * Mark a task completed on my errands list
+ * Assign difficulty for each errand/assignment/quiz, so you can have a consistent workload
  * Add an assignment to my Kanban board
  * Stage the progress my assignments (to do, doing, under review, to submit, complete etc.) on the Kanban board
- * Assign difficulty for each assignment, so you can have a consistent workload
  * Add quizzes/tests/exams for a particular day
  * View what quizzes/tests/exams I have to do for today

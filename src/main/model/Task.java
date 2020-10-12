@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
  * A task is a core part of this application. It defines something that a user has
@@ -27,6 +28,9 @@ import java.time.LocalDate;
  * Because of this, there is one method which must be overriden by each class
  * that inherits `Task`. The method `percentageComplete` must return a floating point
  * value which represents the percentage completed of a task.
+ *
+ * Since this is an abstract class, this class will be thoroughly tested in the
+ * `ErrandTest` tests.
  */
 public abstract class Task {
 
@@ -46,16 +50,6 @@ public abstract class Task {
     // Date the task should be completed on or by
     private LocalDate completeByDate;
 
-    // MODIFIES: this
-    // EFFECTS : Instantiates a new Task with an unnamed title, the minimum number of points,
-    //           an empty description, and a complete by date of today
-    public Task() {
-        this.points = Task.MIN_POINTS;
-        this.title = "Untitled Task";
-        this.description = "";
-        this.completeByDate = LocalDate.now();
-    }
-
     // REQUIRES: title string length must be larger than 0
     // MODIFIES: this
     // EFFECTS : Instantiates a new Task with the given title, the minimum number of points,
@@ -64,17 +58,6 @@ public abstract class Task {
         this.points = Task.MIN_POINTS;
         this.title = title;
         this.description = "";
-        this.completeByDate = LocalDate.now();
-    }
-
-    // REQUIRES: title string length must be larger than 0
-    // MODIFIES: this
-    // EFFECTS : Instantiates a new Task with the given title, the minimum number of points,
-    //           the given description, and a complete by date of today
-    public Task(String title, String description) {
-        this.points = Task.MIN_POINTS;
-        this.title = title;
-        this.description = description;
         this.completeByDate = LocalDate.now();
     }
 
@@ -114,7 +97,7 @@ public abstract class Task {
     //           is within the domain [MIN_POINTS, MAX_POINTS] and returns true,
     //           otherwise returns false
     public boolean setPoints(int points) {
-        if (MIN_POINTS >= points && points <= MAX_POINTS) {
+        if ((MIN_POINTS <= points) && (points <= MAX_POINTS)) {
             this.points = points;
             return true;
         }
@@ -141,6 +124,14 @@ public abstract class Task {
         this.completeByDate = completeByDate;
     }
 
+    // EFFECTS: Returns how many days there are until the complete by day
+    @SuppressWarnings("checkstyle:MethodParamPad")
+    public int daysUntilCompleteByDate() {
+        LocalDate now = LocalDate.now();
+
+        return (int) ChronoUnit.DAYS.between(this.completeByDate, now);
+    }
+
     // EFFECTS: Returns whether or not the task is complete
     public boolean isComplete() {
         return this.percentageComplete() == 1;
@@ -148,9 +139,6 @@ public abstract class Task {
 
     // EFFECTS: Returns the percentage of task completion as a floating point number
     //          within the domain [0,1]
-    public float percentageComplete() {
-        // stub
-        return 0f;
-    }
+    public abstract float percentageComplete();
 
 }

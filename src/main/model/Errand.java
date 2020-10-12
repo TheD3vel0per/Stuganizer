@@ -23,6 +23,7 @@ import java.time.LocalDate;
 public class Errand extends Task {
 
     private boolean hasBeenCompleted;
+    public static Errand NULL_ERRAND = new Errand("NULL");
 
     // EFFECTS: Creates a new untitled errand which has not been completed
     public Errand() {
@@ -49,7 +50,7 @@ public class Errand extends Task {
 
     // EFFECTS: Returns the percentage of task completion as a floating point number
     //          within the domain [0,1]
-    @Override
+    @Override()
     public float percentageComplete() {
         if (this.hasBeenCompleted) {
             return 1f;
@@ -57,6 +58,10 @@ public class Errand extends Task {
         return 0f;
     }
 
+    // EFFECTS: Marks the Errand as completed
+    public void markCompleted() {
+        this.hasBeenCompleted = true;
+    }
 
 
 }

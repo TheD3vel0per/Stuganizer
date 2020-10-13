@@ -29,13 +29,13 @@ public class TaskPrioritizer implements Comparator<Task> {
     //          Returns  0 if task a and task b can occupy the same position
     @Override
     public int compare(Task a, Task b) {
-        if (a == Errand.NULL_ERRAND) {
-            return -1;
+        if (a == b) {
+            return 0;
         }
 
         // Which ones has the closer due day
-        long completeDaysA = ChronoUnit.DAYS.between(a.getCompleteByDate(), LocalDate.now());
-        long completeDaysB = ChronoUnit.DAYS.between(b.getCompleteByDate(), LocalDate.now());
+        long completeDaysA = Math.abs(ChronoUnit.DAYS.between(a.getCompleteByDate(), LocalDate.now()));
+        long completeDaysB = Math.abs(ChronoUnit.DAYS.between(b.getCompleteByDate(), LocalDate.now()));
         if (completeDaysA < completeDaysB) {
             return 1;
         }
@@ -47,7 +47,7 @@ public class TaskPrioritizer implements Comparator<Task> {
         if (a.getPoints() > b.getPoints()) {
             return 1;
         }
-        if (b.getPoints() < a.getPoints()) {
+        if (a.getPoints() < b.getPoints()) {
             return -1;
         }
 

@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ToDoListTest {
 
@@ -20,6 +19,7 @@ public class ToDoListTest {
 
     @BeforeEach()
     public void setup() {
+        this.random = new Random();
         this.toDoList = new ToDoList(this.pointsPerDay);
         this.errandList = new ErrandList();
         this.toDoList.setErrandList(this.errandList);
@@ -49,8 +49,6 @@ public class ToDoListTest {
     public void testOneTask() {
         List<Errand> errands = this.addErrandToErrandList(1);
         Errand errand = errands.get(0);
-
-        // Set errand complete by date to tomorrow
         errand.setCompleteByDate(LocalDate.ofEpochDay(LocalDate.now().toEpochDay() + 1));
 
         assertEquals(errand, this.toDoList.getTasksForToday().get(0));
@@ -59,10 +57,36 @@ public class ToDoListTest {
         assertEquals(1, this.toDoList.getAllTasks().size());
         assertEquals(0, this.toDoList.getPointsAwarded());
 
+        errand.markCompleted();
+
         assertTrue(this.toDoList.markTaskCompleted(errand));
         assertEquals(errand.getPoints(), this.toDoList.getPointsAwarded());
         assertEquals(1, this.toDoList.getTasksCompletedToday().size());
         assertEquals(errand, this.toDoList.getTasksCompletedToday().get(0));
+
+        Errand incompleteErrand = this.addErrandToErrandList(1).get(0);
+        assertFalse(this.toDoList.markTaskCompleted(incompleteErrand));
+        assertEquals(errand.getPoints(), this.toDoList.getPointsAwarded());
+        assertEquals(1, this.toDoList.getTasksCompletedToday().size());
+        assertEquals(errand, this.toDoList.getTasksCompletedToday().get(0));
+    }
+
+    @Test()
+    public void testNextDate() {
+        List<Errand> errands = this.addErrandToErrandList(1);
+        Errand errand = errands.get(0);
+        errand.setCompleteByDate(LocalDate.ofEpochDay(LocalDate.now().toEpochDay() + 1));
+        errand.markCompleted();
+
+        assertTrue(this.toDoList.markTaskCompleted(errand));
+        assertEquals(errand.getPoints(), this.toDoList.getPointsAwarded());
+        assertEquals(1, this.toDoList.getTasksCompletedToday().size());
+        assertEquals(errand, this.toDoList.getTasksCompletedToday().get(0));
+
+        this.toDoList.nullifyDate();
+
+        assertEquals(0, this.toDoList.getPointsAwarded());
+        assertEquals(0, this.toDoList.getTasksCompletedToday().size());
     }
 
 }

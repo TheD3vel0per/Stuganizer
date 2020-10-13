@@ -1,5 +1,6 @@
 package model;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -22,6 +23,22 @@ import java.util.List;
  * should know where to source tasks from. Since there are many different types
  * of tasks, and tasks cannot be instantiated, the way you add these tasks is by
  * adding them to lists, and associating the lists with the to do list.
+ *
+ * Another note when generating a list for the day, the list will overflow the
+ * amount of designated points for a day. Example:
+ *
+ *   Let the points per day be equal to 10
+ *
+ *   Given Task A => 3 points
+ *         Task B => 4 points
+ *         Task C => 5 points
+ *         Task D => 5 points
+ *         Task E => 2 points
+ *
+ *   Assuming tasks are prioritized as A, B, C, D, E
+ *
+ *   The list generated will be A, B, C, will have a total of:
+ *     3 + 4 + 5 = 12 points on the to do list
  *
  * Each to do list will only have one tasks list for each task type. For example,
  * A to do lists will only have one associated `ErrandList`, but can have another
@@ -47,61 +64,98 @@ public class ToDoList {
     public ToDoList(int pointsPerDay) {
         this.pointsPerDay = pointsPerDay;
         this.tasksCompleted = new ArrayList<>();
+        this.lastDate = LocalDate.now();
     }
 
     // EFFECTS: Returns the amount of points awarded for the last day
     public int getPointsAwarded() {
-        // TODO: Implementation for the ToDoList.getTasksForToday method
         this.resetForNextDay();
-        return 0;
+        int pointsAwarded = 0;
+        for (Task task : this.tasksCompleted) {
+            if (task.isComplete()) {
+                pointsAwarded += task.getPoints();
+            }
+        }
+        return pointsAwarded;
     }
 
     // MODIFIES: this
     // EFFECTS : Attaches the given errand list to the
     public void setErrandList(ErrandList errandList) {
-        // TODO: Implementation for the ToDoList.setErrandList method
+        this.errandList = errandList;
     }
 
     // EFFECTS: Gets the errand list associated with the to do list
     public ErrandList getErrandList() {
-        // TODO: Implementation for the ToDoList.getErrandList method
-        return null;
+        return this.errandList;
     }
 
     public List<Task> getTasksCompletedToday() {
-        // TODO: Implementation for the ToDoList.getTasksForToday method
-        return null;
+        return this.tasksCompleted;
     }
 
     // MODIFIES: this
-    // EFFECTS : Returns all tasks scheduled for today, including completed ones
+    // EFFECTS : Returns all tasks scheduled for today, including completed ones, will overflow
+    //           if tasks
     public List<Task> getTasksForToday() {
-        // TODO: Implementation for the ToDoList.getTasksForToday method
         this.resetForNextDay();
 
-        // Generate list
-        return null;
+        List<Task> tasksToday = new ArrayList<>();
+        List<Task> allTasks = this.getAllTasks();
+        allTasks.sort(new TaskPrioritizer());
+
+        int collectablePoints = 0;
+        for (Task task : allTasks) {
+            if (collectablePoints >= this.pointsPerDay) {
+                break;
+            }
+
+            tasksToday.add(task);
+            collectablePoints += task.getPoints();
+        }
+
+        return tasksToday;
     }
 
     // EFFECTS: Returns all the tasks in the to do list in no particular order, including completed ones
     public List<Task> getAllTasks() {
-        // TODO: Implementation for the ToDoList.getAllTasks method
-        return null;
+        List<Task> tasks = new ArrayList<>();
+
+        for (int i = 0; i <= this.errandList.maxIndex(); i++) {
+            Errand errand = this.errandList.get(i);
+            if (errand != Errand.NULL_ERRAND) {
+                tasks.add(errand);
+            }
+        }
+        return tasks;
     }
 
     // MODIFIES: this
     // EFFECTS : Marks the given task as completed
     public boolean markTaskCompleted(Task taskToBeMarked) {
-        return false;
+        if (taskToBeMarked.isComplete()) {
+            this.tasksCompleted.add(taskToBeMarked);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // MODIFIES: this
     // EFFECTS : Resets class for the next day, if it needs to be
     private void resetForNextDay() {
-        if (lastDate == null || lastDate.toString() != LocalDate.now().toString()) {
+        if (lastDate == null || !lastDate.toString().equals(LocalDate.now().toString())) {
             // Reset points awarded for the day
+            this.lastDate = LocalDate.now();
+            this.tasksCompleted = new ArrayList<>();
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS : This method is only to be used when conducting tests, since
+    //           a test cannot wait for the next day to occur (24 hours max)
+    public void nullifyDate() {
+        this.lastDate = null;
+    }
 
 }

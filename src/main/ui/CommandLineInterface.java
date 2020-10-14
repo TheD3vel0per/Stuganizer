@@ -21,7 +21,7 @@ public class CommandLineInterface {
 
     // MODIFIES: this
     // EFFECTS : Instantiates the command line interface
-    public CommandLineInterface() throws IOException {
+    public CommandLineInterface() {
         this.obj = new BufferedReader(new InputStreamReader(System.in));
         this.scanner = new Scanner(System.in);
         this.errandList = new ErrandList();
@@ -106,7 +106,7 @@ public class CommandLineInterface {
     }
 
     // EFFECTS: Prompts the user to choose an action to perform
-    private void chooseAction() throws IOException {
+    private void chooseAction() {
         while (true) {
             // 10this.refreshConsole();
             switch (this.promptActions()) {
@@ -145,25 +145,29 @@ public class CommandLineInterface {
 
     // MODIFIES: this
     // EFFECTS : Adds a new errand to the to do list
-    private void addErrand() throws IOException {
-        System.out.print("\nPlease enter the following information about the errand:\n");
-        System.out.print("Title: ");
-        String title = this.obj.readLine();
-        Errand errand = new Errand(title);
+    private void addErrand() {
+        try {
+            System.out.print("\nPlease enter the following information about the errand:\n");
+            System.out.print("Title: ");
+            String title = this.obj.readLine();
+            Errand errand = new Errand(title);
 
-        System.out.print("Description: ");
-        String description = this.obj.readLine();
-        errand.setDescription(description);
+            System.out.print("Description: ");
+            String description = this.obj.readLine();
+            errand.setDescription(description);
 
-        System.out.print("Points: ");
-        int points = this.getIntegerFromUser(Task.MIN_POINTS, Task.MAX_POINTS);
-        errand.setPoints(points);
+            System.out.print("Points: ");
+            int points = this.getIntegerFromUser(Task.MIN_POINTS, Task.MAX_POINTS);
+            errand.setPoints(points);
 
-        System.out.print("Complete By Date (YYYY-MM-DD): ");
-        LocalDate completeBy = LocalDate.parse(this.obj.readLine());
-        errand.setCompleteByDate(completeBy);
+            System.out.print("Complete By Date (YYYY-MM-DD): ");
+            LocalDate completeBy = LocalDate.parse(this.obj.readLine());
+            errand.setCompleteByDate(completeBy);
 
-        this.errandList.add(errand);
+            this.errandList.add(errand);
+        } catch (IOException error) {
+            System.out.println("There was an error creating the errand.");
+        }
     }
 
     // MODIFIES: this

@@ -1,5 +1,5 @@
-# Kanban4U
-Help organize what you have to do with a Kanban style organizer.
+# Stuganizer
+Help students organize what you have to do with errands, assignments, exams and more!
 
 ### What will the application do?
  * Allow you to add different types of tasks (errands, assignments, test)
@@ -17,11 +17,12 @@ completed in advance, they can only be done on a specific date.
 
 ## User Stories  
 As a user I want to be able to ...  
- * View what I have to do for the day
- * Set how many points I'd like to accomplish per day
+ * View what I have to do for the day (Completed in Phase 1!)
+ * Set how many points I'd like to accomplish per day (Completed in Phase 1!)
  * Assign points (representing difficulty) for each errand/assignment/quiz, so you can have a consistent workload
- * Add an errand to my errands list
- * Mark a task completed on my errands list
+   (Completed in Phase 1!)
+ * Add an errand to my errands list (Completed in Phase 1!)
+ * Mark a task completed on my errands list (Completed in Phase 1!)
  * Add an assignment to my Kanban board
  * Stage the progress my assignments (to do, doing, under review, to submit, complete etc.) on the Kanban board
  * Add quizzes/tests/exams for a particular day

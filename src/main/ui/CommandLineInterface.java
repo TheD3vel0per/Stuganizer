@@ -80,11 +80,11 @@ public class CommandLineInterface {
         System.out.println("");
     }
 
-    // REQUIRES: min and max must be greater than 0
+    // REQUIRES: min and max must be greater than 0, max must be greater than min
     // EFFECTS : Returns an integer from the user within the given domain: [min, max]
     private int getIntegerFromUser(int min, int max) {
         int selectedInt = 0;
-        while (selectedInt == 0) {
+        while (!(min <= selectedInt && selectedInt <= max)) {
             selectedInt = this.scanner.nextInt();
             if (min <= selectedInt && selectedInt <= max) {
                 break;
@@ -97,7 +97,7 @@ public class CommandLineInterface {
 
     // EFFECTS: Lists all the actions which can be performed, and prompts a user to perform one,
     private int promptActions() {
-        System.out.println("Actions");
+        System.out.println("\n\n\nActions");
         System.out.println("--------------------------------------");
         System.out.println("(1) View tasks for today");
         System.out.println("(2) Add an errand to my to do list");
@@ -128,6 +128,7 @@ public class CommandLineInterface {
         System.out.println("\tDescription: " + task.getDescription());
         System.out.println("\tPoints: " + task.getPoints());
         System.out.println("\tComplete by Date: " + task.getCompleteByDate());
+        System.out.println("\tCompleted: " + task.isComplete());
         System.out.print("\n");
     }
 
@@ -136,7 +137,7 @@ public class CommandLineInterface {
         List<Task> tasksForToday = this.toDoList.getTasksForToday();
         for (int i = 0; i < tasksForToday.size(); i++) {
             Task task = tasksForToday.get(i);
-            System.out.println("(" + i + ")\t" + task.getTitle());
+            System.out.println("(" + (i + 1) + ")\t" + task.getTitle());
             this.printTaskDetails(task);
         }
         return tasksForToday;
@@ -145,20 +146,20 @@ public class CommandLineInterface {
     // MODIFIES: this
     // EFFECTS : Adds a new errand to the to do list
     private void addErrand() throws IOException {
-        System.out.print("\nPlease enter the following information about the errand: \n");
+        System.out.print("\nPlease enter the following information about the errand:\n");
         System.out.print("Title: ");
         String title = this.obj.readLine();
         Errand errand = new Errand(title);
 
-        System.out.print("\nDescription: ");
+        System.out.print("Description: ");
         String description = this.obj.readLine();
         errand.setDescription(description);
 
-        System.out.print("\nPoints: ");
+        System.out.print("Points: ");
         int points = this.getIntegerFromUser(Task.MIN_POINTS, Task.MAX_POINTS);
         errand.setPoints(points);
 
-        System.out.print("\nComplete By Date: YYYY-MM-DD\t");
+        System.out.print("Complete By Date (YYYY-MM-DD): ");
         LocalDate completeBy = LocalDate.parse(this.obj.readLine());
         errand.setCompleteByDate(completeBy);
 
@@ -170,7 +171,7 @@ public class CommandLineInterface {
     private void markErrandComplete() {
         List<Task> tasks = this.viewTasksForToday();
         System.out.print("Which errand would you like to mark as complete?: ");
-        int indexToMark = this.getIntegerFromUser(0, tasks.size() - 1);
+        int indexToMark = this.getIntegerFromUser(1, tasks.size()) - 1;
         Errand taskToMark = (Errand) tasks.get(indexToMark);
 
         taskToMark.markCompleted();

@@ -32,16 +32,16 @@ public class TaskPrioritizerTest {
     public void testDiffDays() {
         a.setCompleteByDate(LocalDate.now());
         b.setCompleteByDate(LocalDate.ofEpochDay(LocalDate.now().toEpochDay() + 1));
-        assertEquals(1, this.taskPrioritizer.compare(a, b));
-        assertEquals(-1, this.taskPrioritizer.compare(b, a));
+        assertEquals(-1, this.taskPrioritizer.compare(a, b));
+        assertEquals(1, this.taskPrioritizer.compare(b, a));
     }
 
     @Test()
     public void testDiffPoints() {
         a.setPoints(5);
         b.setPoints(4);
-        assertEquals(1, this.taskPrioritizer.compare(a, b));
-        assertEquals(-1, this.taskPrioritizer.compare(b, a));
+        assertEquals(-1, this.taskPrioritizer.compare(a, b));
+        assertEquals(1, this.taskPrioritizer.compare(b, a));
     }
 
     @Test()

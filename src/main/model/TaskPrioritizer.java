@@ -37,18 +37,18 @@ public class TaskPrioritizer implements Comparator<Task> {
         long completeDaysA = Math.abs(ChronoUnit.DAYS.between(a.getCompleteByDate(), LocalDate.now()));
         long completeDaysB = Math.abs(ChronoUnit.DAYS.between(b.getCompleteByDate(), LocalDate.now()));
         if (completeDaysA < completeDaysB) {
-            return 1;
+            return -1;
         }
         if (completeDaysA > completeDaysB) {
-            return -1;
+            return 1;
         }
 
         // Which one awards more points
         if (a.getPoints() > b.getPoints()) {
-            return 1;
+            return -1;
         }
         if (a.getPoints() < b.getPoints()) {
-            return -1;
+            return 1;
         }
 
         // Since the only type of task that exists are errands:

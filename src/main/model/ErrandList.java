@@ -50,13 +50,17 @@ import java.util.List;
 public class ErrandList {
     private List<Errand> errands;
 
-    // MODIFIES: this
-    // EFFECTS : Instantiates the Errand list
+    /**
+     * MODIFIES: this
+     * EFFECTS : Instantiates the Errand list
+     */
     public ErrandList() {
         this.errands = new LinkedList<Errand>();
     }
 
-    // EFFECTS: Returns the quantity of errands in the list
+    /**
+     * EFFECTS: Returns the quantity of errands in the list
+     */
     public int size() {
         int size = 0;
         for (Errand next : this.errands) {
@@ -67,20 +71,26 @@ public class ErrandList {
         return size;
     }
 
-    // EFFECTS: Returns the maximum index of the errand list, if there are
-    //          no elements in the list, returns -1
+    /**
+     * EFFECTS: Returns the maximum index of the errand list, if there are
+     *          no elements in the list, returns -1
+     */
     public int maxIndex() {
         return this.errands.size() - 1;
     }
 
-    // MODIFIES: this
-    // EFFECTS : Adds the given errand to the errand list, and returns its index
+    /**
+     * MODIFIES: this
+     * EFFECTS : Adds the given errand to the errand list, and returns its index
+     */
     public int add(Errand errandToAdd) {
         this.errands.add(errandToAdd);
         return this.size() - 1;
     }
 
-    // EFFECTS : Returns the errand located at the given index, if none exists, returns null
+    /**
+     * EFFECTS : Returns the errand located at the given index, if none exists, returns null
+     */
     public Errand get(int index) {
         if (index > this.maxIndex()) {
             return null;
@@ -88,8 +98,10 @@ public class ErrandList {
         return this.errands.get(index);
     }
 
-    // EFFECTS: Returns the first Errand in the list which has not been completed, with
-    //          the nearest completed by date, if one cannot be found, returns null
+    /**
+     * EFFECTS: Returns the first Errand in the list which has not been completed, with
+     *          the nearest completed by date, if one cannot be found, returns null
+     */
     public Errand getNext() {
         Errand highestPriority = null;
         for (Errand next : this.errands) {
@@ -116,14 +128,18 @@ public class ErrandList {
         return highestPriority;
     }
 
-    // REQUIRES: There must be an errand at the given index
-    // MODIFIES: this
-    // EFFECTS : Removes the errand at the given index
+    /**
+     * REQUIRES: There must be an errand at the given index
+     * MODIFIES: this
+     * EFFECTS : Removes the errand at the given index
+     */
     public void remove(int index) {
         this.errands.set(index, Errand.NULL_ERRAND);
     }
 
-    // EFFECTS: Returns true if the list is empty, otherwise false
+    /**
+     * EFFECTS: Returns true if the list is empty, otherwise false
+     */
     public boolean isEmpty() {
         return this.size() == 0;
     }

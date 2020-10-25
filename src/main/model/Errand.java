@@ -25,31 +25,39 @@ public class Errand extends Task {
     private boolean hasBeenCompleted;
     public static Errand NULL_ERRAND = new Errand("NULL");
 
-    // EFFECTS: Creates a new untitled errand which has not been completed
+    /**
+     * EFFECTS: Creates a new untitled errand which has not been completed
+     */
     public Errand() {
         super("Untitled Errand");
         this.hasBeenCompleted = false;
     }
 
-    // REQUIRES: title string length must be larger than 0
-    // MODIFIES: this
-    // EFFECTS : Creates a new errand with the given title which has not been completed
+    /**
+     * REQUIRES: title string length must be larger than 0
+     * MODIFIES: this
+     * EFFECTS : Creates a new errand with the given title which has not been completed
+     */
     public Errand(String title) {
         super(title);
         this.hasBeenCompleted = false;
     }
 
-    // REQUIRES: title string length must be larger than 0
-    // MODIFIES: this
-    // EFFECTS : Creates a new errand with the given title, and complete by date,
-    //           which has not been completed
+    /**
+     * REQUIRES: title string length must be larger than 0
+     * MODIFIES: this
+     * EFFECTS : Creates a new errand with the given title, and complete by date,
+     *           which has not been completed
+     */
     public Errand(String title, LocalDate completeByDate) {
         super(title, "", completeByDate);
         this.hasBeenCompleted = false;
     }
 
-    // EFFECTS: Returns the percentage of task completion as a floating point number
-    //          within the domain [0,1]
+    /**
+     * EFFECTS: Returns the percentage of task completion as a floating point number
+     *          within the domain [0,1]
+     */
     @Override()
     public float percentageComplete() {
         if (this.hasBeenCompleted) {
@@ -58,7 +66,9 @@ public class Errand extends Task {
         return 0f;
     }
 
-    // EFFECTS: Marks the Errand as completed
+    /**
+     * EFFECTS: Marks the Errand as completed
+     */
     public void markCompleted() {
         this.hasBeenCompleted = true;
     }

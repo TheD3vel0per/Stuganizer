@@ -23,6 +23,8 @@ As a user I want to be able to ...
    (Completed in Phase 1!)
  * Add an errand to my errands list (Completed in Phase 1!)
  * Mark a task completed on my errands list (Completed in Phase 1!)
+ * Save my tasks and other configuration to a file
+ * Reload my tasks and other configuration from a file
  * Add an assignment to my Kanban board
  * Stage the progress my assignments (to do, doing, under review, to submit, complete etc.) on the Kanban board
  * Add quizzes/tests/exams for a particular day

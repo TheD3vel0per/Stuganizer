@@ -45,6 +45,26 @@ public class TaskPrioritizerTest {
     }
 
     @Test()
+    public void testDiffType1() {
+        this.b = new Assignment("Test Assignment");
+        a.setCompleteByDate(LocalDate.now());
+        b.setCompleteByDate(LocalDate.now());
+        a.setPoints(5);
+        b.setPoints(5);
+        assertEquals(1, this.taskPrioritizer.compare(a, b));
+    }
+
+    @Test()
+    public void testDiffType2() {
+        this.a = new Assignment("Test Assignment");
+        a.setCompleteByDate(LocalDate.now());
+        b.setCompleteByDate(LocalDate.now());
+        a.setPoints(5);
+        b.setPoints(5);
+        assertEquals(-1, this.taskPrioritizer.compare(a, b));
+    }
+
+    @Test()
     public void testNoneOfAll() {
         a.setCompleteByDate(LocalDate.now());
         b.setCompleteByDate(LocalDate.now());

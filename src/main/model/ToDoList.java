@@ -151,6 +151,13 @@ public class ToDoList {
                 tasks.add(errand);
             }
         }
+
+        for (int i = 0; i <= this.assignmentList.maxIndex(); i++) {
+            Assignment assignment = this.assignmentList.get(i);
+            if (assignment != Assignment.NULL_ASSIGNMENT) {
+                tasks.add(assignment);
+            }
+        }
         return tasks;
     }
 

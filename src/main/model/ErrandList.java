@@ -1,6 +1,6 @@
 package model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +41,7 @@ import java.util.List;
  * `list.size()` ======> 1
  * `list.maxIndex()` ==> 2
  *
- * Values added onto the
+ * Values added onto the end have an index increment of 1.
  *
  * Highest priority is determined by the following ordered criteria:
  *  1. How close the complete by date is from the present
@@ -55,7 +55,7 @@ public class ErrandList {
      * EFFECTS : Instantiates the Errand list
      */
     public ErrandList() {
-        this.errands = new LinkedList<Errand>();
+        this.errands = new ArrayList<Errand>();
     }
 
     /**

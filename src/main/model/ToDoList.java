@@ -1,9 +1,9 @@
 package model;
 
-import java.lang.reflect.Array;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 
 /**
@@ -57,17 +57,22 @@ public class ToDoList {
     private LocalDate lastDate;
 
     private ErrandList errandList;
+    private AssignmentList assignmentList;
 
-    // REQUIRES: Integer supplied must in the domain of [Task.MAX_POINTS, Integer.MAX_VALUE]
-    // MODIFIES: this
-    // EFFECTS : Instantiates a new to do list with the goal of the given integer of points per day
+    /**
+     * REQUIRES: Integer supplied must in the domain of [Task.MAX_POINTS, Integer.MAX_VALUE]
+     * MODIFIES: this
+     * EFFECTS : Instantiates a new to do list with the goal of the given integer of points per day
+     */
     public ToDoList(int pointsPerDay) {
         this.pointsPerDay = pointsPerDay;
         this.tasksCompleted = new ArrayList<>();
         this.lastDate = LocalDate.now();
     }
 
-    // EFFECTS: Returns the amount of points awarded for the last day
+    /**
+     * EFFECTS: Returns the amount of points awarded for the last day
+     */
     public int getPointsAwarded() {
         this.resetForNextDay();
         int pointsAwarded = 0;
@@ -79,24 +84,41 @@ public class ToDoList {
         return pointsAwarded;
     }
 
-    // MODIFIES: this
-    // EFFECTS : Attaches the given errand list to the
+    /**
+     * MODIFIES: this
+     * EFFECTS : Attaches the given errand list to the to do list
+     */
     public void setErrandList(ErrandList errandList) {
         this.errandList = errandList;
     }
 
-    // EFFECTS: Gets the errand list associated with the to do list
+    /**
+     * MODIFIES: this
+     * EFFECTS : Attaches the given errand list to the to do list
+     */
+    public void setAssignmentList(AssignmentList assignmentList) {
+        this.assignmentList = assignmentList;
+    }
+
+    /**
+     * EFFECTS: Gets the errand list associated with the to do list
+     */
     public ErrandList getErrandList() {
         return this.errandList;
     }
 
+    /**
+     * EFFECTS: Returns all the tasks which have been completed on the day
+     */
     public List<Task> getTasksCompletedToday() {
         return this.tasksCompleted;
     }
 
-    // MODIFIES: this
-    // EFFECTS : Returns all tasks scheduled for today, including completed ones, will overflow
-    //           if tasks
+    /**
+     * MODIFIES: this
+     * EFFECTS : Returns all tasks scheduled for today, including completed ones, will overflow
+     *           if tasks
+     */
     public List<Task> getTasksForToday() {
         this.resetForNextDay();
 
@@ -117,7 +139,9 @@ public class ToDoList {
         return tasksToday;
     }
 
-    // EFFECTS: Returns all the tasks in the to do list in no particular order, including completed ones
+    /**
+     * EFFECTS: Returns all the tasks in the to do list in no particular order, including completed ones
+     */
     public List<Task> getAllTasks() {
         List<Task> tasks = new ArrayList<>();
 
@@ -130,8 +154,10 @@ public class ToDoList {
         return tasks;
     }
 
-    // MODIFIES: this
-    // EFFECTS : Marks the given task as completed
+    /**
+     * MODIFIES: this
+     * EFFECTS : Marks the given task as completed
+     */
     public boolean markTaskCompleted(Task taskToBeMarked) {
         if (taskToBeMarked.isComplete()) {
             this.tasksCompleted.add(taskToBeMarked);
@@ -141,8 +167,10 @@ public class ToDoList {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS : Resets class for the next day, if it needs to be
+    /**
+     * MODIFIES: this
+     * EFFECTS : Resets class for the next day, if it needs to be
+     */
     private void resetForNextDay() {
         if (lastDate == null || !lastDate.toString().equals(LocalDate.now().toString())) {
             // Reset points awarded for the day
@@ -151,11 +179,12 @@ public class ToDoList {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS : This method is only to be used when conducting tests, since
-    //           a test cannot wait for the next day to occur (24 hours max)
+    /**
+     * MODIFIES: this
+     * EFFECTS : This method is only to be used when conducting tests, since
+     *           a test cannot wait for the next day to occur (24 hours max)
+     */
     public void nullifyDate() {
         this.lastDate = null;
     }
-
 }

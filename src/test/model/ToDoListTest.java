@@ -41,6 +41,19 @@ public class ToDoListTest {
         return errands;
     }
 
+    public ArrayList<Assignment> addErrandToAssignmentList(int quantity) {
+        ArrayList<Assignment> assignments = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            Assignment assignmentToAdd = new Assignment("Test Assignment #" + i);
+            assignmentToAdd.setPoints(
+                    Task.MIN_POINTS + this.random.nextInt(Task.MAX_POINTS - Task.MIN_POINTS)
+            );
+            this.assignmentList.add(assignmentToAdd);
+            assignments.add(assignmentToAdd);
+        }
+        return assignments;
+    }
+
     @Test()
     public void testEmpty() {
         assertEquals(this.errandList, this.toDoList.getErrandList());
@@ -49,7 +62,7 @@ public class ToDoListTest {
     }
 
     @Test()
-    public void testOneTask() {
+    public void testOneErrand() {
         List<Errand> errands = this.addErrandToErrandList(1);
         Errand errand = errands.get(0);
         errand.setCompleteByDate(LocalDate.ofEpochDay(LocalDate.now().toEpochDay() + 1));
@@ -72,6 +85,27 @@ public class ToDoListTest {
         assertEquals(errand.getPoints(), this.toDoList.getPointsAwarded());
         assertEquals(1, this.toDoList.getTasksCompletedToday().size());
         assertEquals(errand, this.toDoList.getTasksCompletedToday().get(0));
+    }
+
+    @Test
+    public void testOneAssignment() {
+        List<Assignment> assignments = this.addErrandToAssignmentList(1);
+        Assignment assignment = assignments.get(0);
+        assignment.setCompleteByDate(LocalDate.ofEpochDay(LocalDate.now().toEpochDay() + 1));
+
+        assertEquals(assignment, this.toDoList.getTasksForToday().get(0));
+        assertEquals(1, this.toDoList.getTasksForToday().size());
+        assertEquals(assignment, this.toDoList.getAllTasks().get(0));
+        assertEquals(1, this.toDoList.getAllTasks().size());
+        assertEquals(0, this.toDoList.getPointsAwarded());
+
+        assignment.stageForward();
+
+        assertEquals(assignment, this.toDoList.getTasksForToday().get(0));
+        assertEquals(1, this.toDoList.getTasksForToday().size());
+        assertEquals(assignment, this.toDoList.getAllTasks().get(0));
+        assertEquals(1, this.toDoList.getAllTasks().size());
+        assertEquals(0, this.toDoList.getPointsAwarded());
     }
 
     @Test()

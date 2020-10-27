@@ -33,8 +33,7 @@ public class JsonWriter {
     // MODIFIES: this
     // EFFECTS: writes JSON representation of workroom to file
     public void write(ToDoList tdl) {
-        // JSONObject json = wr.toJson();
-        JSONObject json = new JSONObject(tdl);
+        JSONObject json = tdl.toJson();
         saveToFile(json.toString(TAB));
     }
 

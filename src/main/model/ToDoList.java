@@ -72,6 +72,13 @@ public class ToDoList implements JsonifiableObject {
     }
 
     /**
+     * EFFECTS: Returns the amount of points that the user wants to accomplish per day
+     */
+    public int getPointsPerDay() {
+        return this.pointsPerDay;
+    }
+
+    /**
      * EFFECTS: Returns the amount of points awarded for the last day
      */
     public int getPointsAwarded() {

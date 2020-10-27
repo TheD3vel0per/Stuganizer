@@ -25,11 +25,6 @@ public class Assignment extends Task {
     private AssignmentStage stage;
 
     /**
-     * Course code for the course associated with this assignment
-     */
-    private String courseCode;
-
-    /**
      * REQUIRES: title string length must be larger than 0
      * MODIFIES: this
      * EFFECTS : Instatiates a new Assignment with the given title, and sets the
@@ -38,6 +33,17 @@ public class Assignment extends Task {
     public Assignment(String title) {
         super(title);
         this.stage = Assignment.DEFAULT_STAGE;
+    }
+
+    /**
+     * REQUIRES: title string length must be larger than 0
+     * MODIFIES: this
+     * EFFECTS : Instatiates a new Assignment with the given title, and sets the
+     *           assign
+     */
+    public Assignment(String title, AssignmentStage starting) {
+        super(title);
+        this.stage = starting;
     }
 
     /**

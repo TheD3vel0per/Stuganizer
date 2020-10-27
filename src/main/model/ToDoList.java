@@ -109,6 +109,13 @@ public class ToDoList implements JsonifiableObject {
     }
 
     /**
+     * EFFECTS: Gets the assignment list associated with the to do list
+     */
+    public AssignmentList getAssignmentList() {
+        return this.assignmentList;
+    }
+
+    /**
      * EFFECTS: Returns all the tasks which have been completed on the day
      */
     public List<Task> getTasksCompletedToday() {

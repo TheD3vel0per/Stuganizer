@@ -54,6 +54,7 @@ public enum AssignmentStage {
      */
     COMPLETE;
 
+    // EFFECTS: Converts the AssignmentStage to a string
     @Override
     public String toString() {
         String name = "";
@@ -75,4 +76,23 @@ public enum AssignmentStage {
         }
     }
 
+    // EFFECTS: Converts a string to an assignment stage
+    public static AssignmentStage fromString(String assignment) {
+        switch (assignment) {
+            case "Need to Start": // NEED_TO_START
+                return AssignmentStage.NEED_TO_START;
+            case "Started": // STARTED
+                return AssignmentStage.STARTED;
+            case "Halfway": // HALFWAY
+                return AssignmentStage.HALFWAY;
+            case "Review": // REVIEW
+                return AssignmentStage.REVIEW;
+            case "Send to Submit": // SUBMIT
+                return AssignmentStage.SUBMISSION;
+            case "Complete!": // COMPLETE
+                return AssignmentStage.COMPLETE;
+            default:
+                return null;
+        }
+    }
 }

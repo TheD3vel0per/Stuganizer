@@ -10,8 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * These tests were retrieved from:
  * https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/ui/WorkRoomApp.java
+ *
+ * and then modified to fit the needs of the application.
  */
-public class JsonReaderTest {
+public class JsonReaderTest extends JsonTest {
     @Test
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
@@ -58,30 +60,5 @@ public class JsonReaderTest {
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
-    }
-
-    void checkErrand1(Errand errandToCheck) {
-        assertEquals(2, errandToCheck.getPoints());
-        assertEquals("Grocery Shopping", errandToCheck.getTitle());
-        assertFalse(errandToCheck.isComplete());
-        assertEquals("Need to buy more milk, bread, and eggs.", errandToCheck.getDescription());
-        assertEquals("2021-12-31", errandToCheck.getCompleteByDate().toString());
-    }
-
-    void checkErrand2(Errand errandToCheck) {
-        assertEquals(3, errandToCheck.getPoints());
-        assertEquals("Clean the Kitchen", errandToCheck.getTitle());
-        assertTrue(errandToCheck.isComplete());
-        assertEquals("Clean the fridge and mop the floor.", errandToCheck.getDescription());
-        assertEquals("2021-12-31", errandToCheck.getCompleteByDate().toString());
-    }
-
-    void checkAssignment(Assignment assignmentToCheck) {
-        assertEquals(4, assignmentToCheck.getPoints());
-        assertEquals("Math 226 Webwork", assignmentToCheck.getTitle());
-        assertFalse(assignmentToCheck.isComplete());
-        assertEquals("I need to complete a couple of questions", assignmentToCheck.getDescription());
-        assertEquals("2021-12-31", assignmentToCheck.getCompleteByDate().toString());
-        assertEquals("Need to Start", assignmentToCheck.getStage().toString());
     }
 }

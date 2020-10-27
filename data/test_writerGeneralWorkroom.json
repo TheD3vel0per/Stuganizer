@@ -1,0 +1,27 @@
+{
+    "pointsPerDay": 10,
+    "assignmentList": [{
+        "stage": "Need to Start",
+        "completeByDate": "2021-12-31",
+        "description": "I need to complete a couple of questions",
+        "completed": false,
+        "title": "Math 226 Webwork",
+        "points": 4
+    }],
+    "errandList": [
+        {
+            "completeByDate": "2021-12-31",
+            "description": "Need to buy more milk, bread, and eggs.",
+            "completed": false,
+            "title": "Grocery Shopping",
+            "points": 2
+        },
+        {
+            "completeByDate": "2021-12-31",
+            "description": "Clean the fridge and mop the floor.",
+            "completed": true,
+            "title": "Clean the Kitchen",
+            "points": 3
+        }
+    ]
+}

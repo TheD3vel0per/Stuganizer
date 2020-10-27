@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import persistence.JsonifiableArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +50,7 @@ import java.util.List;
  *  1. How close the complete by date is from the present
  *  2. The points (a larger number has more priority)
  */
-public class ErrandList {
+public class ErrandList implements JsonifiableArray {
     private List<Errand> errands;
 
     /**
@@ -145,5 +148,17 @@ public class ErrandList {
     }
 
 
-
+    /**
+     * EFFECTS: Returns a JSONArray representing the errand list
+     */
+    @Override
+    public JSONArray toJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Errand next : this.errands) {
+            if (next != Errand.NULL_ERRAND) {
+                jsonArray.put(next.toJson());
+            }
+        }
+        return jsonArray;
+    }
 }

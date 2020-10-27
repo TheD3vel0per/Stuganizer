@@ -2,6 +2,6 @@ package persistence;
 
 import org.json.JSONObject;
 
-public interface Jsonifiable {
+public interface JsonifiableObject {
     public JSONObject toJson();
 }

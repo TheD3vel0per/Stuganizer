@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.JsonifiableObject;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -32,7 +35,7 @@ import java.time.temporal.ChronoUnit;
  * Since this is an abstract class, this class will be thoroughly tested in the
  * `ErrandTest` tests.
  */
-public abstract class Task {
+public abstract class Task implements JsonifiableObject {
 
     public static int MIN_POINTS = 1;
     public static int MAX_POINTS = 5;
@@ -174,5 +177,19 @@ public abstract class Task {
      *          within the domain [0,1]
      */
     public abstract float percentageComplete();
+
+    /**
+     * EFFECTS: Returns a JSONObject representing the task
+     */
+    @Override()
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("title", this.getTitle());
+        jsonObject.put("description", this.getDescription());
+        jsonObject.put("points", this.getPoints());
+        jsonObject.put("completeByDate", this.getCompleteByDate().toString());
+        jsonObject.put("completed", this.isComplete());
+        return jsonObject;
+    }
 
 }

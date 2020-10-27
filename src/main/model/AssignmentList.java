@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import persistence.JsonifiableArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +41,7 @@ import java.util.List;
  *
  * Values added onto the end have an index increment of 1.
  */
-public class AssignmentList {
+public class AssignmentList implements JsonifiableArray {
     private List<Assignment> assignments;
 
     /**
@@ -106,4 +109,17 @@ public class AssignmentList {
     }
 
 
+    /**
+     * EFFECTS: Returns a JSONArray representing the errand list
+     */
+    @Override
+    public JSONArray toJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Assignment next : this.assignments) {
+            if (next != Assignment.NULL_ASSIGNMENT) {
+                jsonArray.put(next.toJson());
+            }
+        }
+        return jsonArray;
+    }
 }

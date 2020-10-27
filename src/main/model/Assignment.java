@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 /**
  * Please make sure you've familiarized yourself with the `Assignment`
  * class before you start reading this!
@@ -135,5 +137,15 @@ public class Assignment extends Task {
                 break;
         }
         return percentageComplete;
+    }
+
+    /**
+     * EFFECTS: Returns a JSONObject representing the assignment
+     */
+    @Override()
+    public JSONObject toJson() {
+        JSONObject jsonObject = super.toJson();
+        jsonObject.put("stage", this.getStage().toString());
+        return jsonObject;
     }
 }

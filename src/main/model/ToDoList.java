@@ -1,6 +1,7 @@
 package model;
 
 import org.json.JSONObject;
+import persistence.JsonifiableObject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ import java.util.List;
  * this class is being implemented now, instead of just fetching from the `ErrandList`
  * directly.
  */
-public class ToDoList {
+public class ToDoList implements JsonifiableObject {
 
     private int pointsPerDay;
     private List<Task> tasksCompleted;
@@ -193,5 +194,17 @@ public class ToDoList {
      */
     public void nullifyDate() {
         this.lastDate = null;
+    }
+
+    /**
+     * EFFECTS: Returns the to do list represented as a JSONObject
+     */
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("pointsPerDay",this.pointsPerDay);
+        jsonObject.put("errandList", this.errandList.toJson());
+        jsonObject.put("assignmentList", this.assignmentList.toJson());
+        return jsonObject;
     }
 }

@@ -85,7 +85,7 @@ public class JsonReader {
     // EFFECTS : parses errands from JSON object and returns the errand list
     private ErrandList extractErrands(JSONObject jsonObject) {
         ErrandList errandList = new ErrandList();
-        JSONArray jsonArray = jsonObject.getJSONArray("assignmentList");
+        JSONArray jsonArray = jsonObject.getJSONArray("errandList");
         for (Object json : jsonArray) {
             JSONObject nextAssignment = (JSONObject) json;
             errandList.add(extractErrand(nextAssignment));

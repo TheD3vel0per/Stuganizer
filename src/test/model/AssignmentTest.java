@@ -51,4 +51,14 @@ public class AssignmentTest {
         assertEquals(1f, this.assignment.percentageComplete());
         this.assignment.stageForward();
     }
+
+    @Test()
+    public void testDifferentStage() {
+        this.assignment = new Assignment("Test Assignment", AssignmentStage.COMPLETE);
+        this.assignment.setDescription("Just another assignment.");
+        this.assignment.setPoints(5);
+        this.assignment.setCompleteByDate(LocalDate.now());
+        assertEquals(AssignmentStage.COMPLETE, this.assignment.getStage());
+        assertEquals(AssignmentStage.COMPLETE, this.assignment.stageForward());
+    }
 }

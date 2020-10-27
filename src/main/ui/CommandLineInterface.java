@@ -1,8 +1,11 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
@@ -11,23 +14,36 @@ import java.util.Scanner;
 
 public class CommandLineInterface {
 
+    private static final String JSON_STORE = "./data/todolist.json";
+
     private Scanner scanner;
     private ToDoList toDoList;
     private ErrandList errandList;
     private AssignmentList assignmentList;
     private BufferedReader obj;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private boolean isRunning;
 
     // MODIFIES: this
     // EFFECTS : Instantiates the command line interface
     public CommandLineInterface() {
+        this.isRunning = true;
         this.obj = new BufferedReader(new InputStreamReader(System.in));
         this.scanner = new Scanner(System.in);
-        this.errandList = new ErrandList();
-        this.assignmentList = new AssignmentList();
-        this.toDoList = new ToDoList(this.askPointsPerDay());
-        this.toDoList.setErrandList(this.errandList);
-        this.toDoList.setAssignmentList(this.assignmentList);
+        this.jsonWriter = new JsonWriter(JSON_STORE);
+        this.jsonReader = new JsonReader(JSON_STORE);
+        try {
+            this.toDoList = this.jsonReader.read();
+        } catch (Exception exception) {
+            this.toDoList = new ToDoList(this.askPointsPerDay());
+            this.toDoList.setErrandList(new ErrandList());
+            this.toDoList.setAssignmentList(new AssignmentList());
+        }
+        this.errandList = this.toDoList.getErrandList();
+        this.assignmentList = this.toDoList.getAssignmentList();
         this.clearScreen();
+        this.showWelcomeMessage();
         this.chooseAction();
     }
 
@@ -58,7 +74,6 @@ public class CommandLineInterface {
 
     // EFFECTS: Asks the user how many points they'd like to accomplish per day
     private int askPointsPerDay() {
-        this.showWelcomeMessage();
         int pointsPerDay = -1;
         do {
             System.out.println("Please enter how many points you'd like to accomplish per day:");
@@ -104,13 +119,13 @@ public class CommandLineInterface {
         System.out.println("(3) Mark an errand as completed");
         System.out.println("(4) Add an assignment to my to do list");
         System.out.println("(5) Stage an assignment");
-        return this.getIntegerFromUser(1, 5);
+        System.out.println("(6) Save and Quit");
+        return this.getIntegerFromUser(1, 6);
     }
 
     // EFFECTS: Prompts the user to choose an action to perform
     private void chooseAction() {
-        while (true) {
-            // 10this.refreshConsole();
+        do {
             switch (this.promptActions()) {
                 case 1:
                     this.viewTasksForToday(Task.class);
@@ -127,8 +142,11 @@ public class CommandLineInterface {
                 case 5:
                     this.stageAssignment();
                     break;
+                case 6:
+                    this.saveToFileSystemAndClose();
+                    break;
             }
-        }
+        } while (isRunning);
     }
 
     // EFFECTS: Prints the task details out to the console, does not print the title
@@ -237,6 +255,22 @@ public class CommandLineInterface {
         Assignment taskToMark = (Assignment) tasks.get(indexToMark);
         taskToMark.stageForward();
         this.toDoList.markTaskCompleted(taskToMark);
+    }
+
+    // EFFECTS: Save the to do list to the filesystem
+    //
+    // Implementation taken from
+    // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/ui/WorkRoomApp.java
+    private void saveToFileSystemAndClose() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(this.toDoList);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+            this.isRunning = false;
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
 
 }

@@ -1,9 +1,6 @@
 package ui;
 
-import model.Errand;
-import model.ErrandList;
-import model.Task;
-import model.ToDoList;
+import model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +14,7 @@ public class CommandLineInterface {
     private Scanner scanner;
     private ToDoList toDoList;
     private ErrandList errandList;
+    private AssignmentList assignmentList;
     private BufferedReader obj;
 
     // MODIFIES: this
@@ -25,8 +23,10 @@ public class CommandLineInterface {
         this.obj = new BufferedReader(new InputStreamReader(System.in));
         this.scanner = new Scanner(System.in);
         this.errandList = new ErrandList();
+        this.assignmentList = new AssignmentList();
         this.toDoList = new ToDoList(this.askPointsPerDay());
         this.toDoList.setErrandList(this.errandList);
+        this.toDoList.setAssignmentList(this.assignmentList);
         this.clearScreen();
         this.chooseAction();
     }
@@ -102,7 +102,9 @@ public class CommandLineInterface {
         System.out.println("(1) View tasks for today");
         System.out.println("(2) Add an errand to my to do list");
         System.out.println("(3) Mark an errand as completed");
-        return this.getIntegerFromUser(1, 3);
+        System.out.println("(4) Add an assignment to my to do list");
+        System.out.println("(5) Stage an assignment");
+        return this.getIntegerFromUser(1, 5);
     }
 
     // EFFECTS: Prompts the user to choose an action to perform
@@ -111,13 +113,19 @@ public class CommandLineInterface {
             // 10this.refreshConsole();
             switch (this.promptActions()) {
                 case 1:
-                    this.viewTasksForToday();
+                    this.viewTasksForToday(Task.class);
                     break;
                 case 2:
                     this.addErrand();
                     break;
                 case 3:
                     this.markErrandComplete();
+                    break;
+                case 4:
+                    this.addAssignment();
+                    break;
+                case 5:
+                    this.stageAssignment();
                     break;
             }
         }
@@ -126,19 +134,26 @@ public class CommandLineInterface {
     // EFFECTS: Prints the task details out to the console, does not print the title
     private void printTaskDetails(Task task) {
         System.out.println("\tDescription: " + task.getDescription());
+        System.out.println("\tType: " + task.getClass().getName());
         System.out.println("\tPoints: " + task.getPoints());
         System.out.println("\tComplete by Date: " + task.getCompleteByDate());
         System.out.println("\tCompleted: " + task.isComplete());
+        if (task.getClass() == Assignment.class) {
+            Assignment assignment = (Assignment) task;
+            System.out.println("\tStage: " + assignment.getStage().toString());
+        }
         System.out.print("\n");
     }
 
     // EFFECTS: Prints out all the tasks that a user has to do today, and returns all the tasks for today
-    private List<Task> viewTasksForToday() {
+    private List<Task> viewTasksForToday(Object type) {
         List<Task> tasksForToday = this.toDoList.getTasksForToday();
         for (int i = 0; i < tasksForToday.size(); i++) {
             Task task = tasksForToday.get(i);
-            System.out.println("(" + (i + 1) + ")\t" + task.getTitle());
-            this.printTaskDetails(task);
+            if (type == task.getClass() || type == Task.class) {
+                System.out.println("(" + (i + 1) + ")\t" + task.getTitle());
+                this.printTaskDetails(task);
+            }
         }
         return tasksForToday;
     }
@@ -173,12 +188,54 @@ public class CommandLineInterface {
     // MODIFIES: this
     // EFFECTS : Asks the user which errand to mark as complete, then marks that errand as complete
     private void markErrandComplete() {
-        List<Task> tasks = this.viewTasksForToday();
+        List<Task> tasks = this.viewTasksForToday(Errand.class);
         System.out.print("Which errand would you like to mark as complete?: ");
         int indexToMark = this.getIntegerFromUser(1, tasks.size()) - 1;
         Errand taskToMark = (Errand) tasks.get(indexToMark);
 
         taskToMark.markCompleted();
+        this.toDoList.markTaskCompleted(taskToMark);
+    }
+
+    // MODIFIES: this
+    // EFFECTS : Adds an assignment to the to do list
+    private void addAssignment() {
+        try {
+            System.out.print("\nPlease enter the following information about the assignment:\n");
+            System.out.print("Title: ");
+            String title = this.obj.readLine();
+            Assignment assignment = new Assignment(title);
+
+            System.out.print("Description: ");
+            String description = this.obj.readLine();
+            assignment.setDescription(description);
+
+            System.out.print("Points: ");
+            int points = this.getIntegerFromUser(Task.MIN_POINTS, Task.MAX_POINTS);
+            assignment.setPoints(points);
+
+            System.out.print("Complete By Date (YYYY-MM-DD): ");
+            LocalDate completeBy = LocalDate.parse(this.obj.readLine());
+            assignment.setCompleteByDate(completeBy);
+
+            this.assignmentList.add(assignment);
+        } catch (IOException error) {
+            System.out.println("There was an error creating the assignment.");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS : Asks the user which errand to mark as complete, then marks that errand as complete
+    private void stageAssignment() {
+        List<Task> tasks = this.viewTasksForToday(Assignment.class);
+        System.out.print("Which assignment would you like to stage forward?: ");
+        int indexToMark = this.getIntegerFromUser(1, tasks.size()) - 1;
+        if (tasks.get(indexToMark).getClass() != Assignment.class) {
+            System.out.println("You have not specified a valid assignment");
+            return;
+        }
+        Assignment taskToMark = (Assignment) tasks.get(indexToMark);
+        taskToMark.stageForward();
         this.toDoList.markTaskCompleted(taskToMark);
     }
 

@@ -67,7 +67,7 @@ public enum AssignmentStage {
                 return "Halfway";
             case 3: // REVIEW
                 return "Review";
-            case 4: // SUBMIT
+            case 4: // SUBMISSION
                 return "Send to Submit";
             case 5: // COMPLETE
                 return "Complete!";
@@ -87,7 +87,7 @@ public enum AssignmentStage {
                 return AssignmentStage.HALFWAY;
             case "Review": // REVIEW
                 return AssignmentStage.REVIEW;
-            case "Send to Submit": // SUBMIT
+            case "Send to Submit": // SUBMISSION
                 return AssignmentStage.SUBMISSION;
             case "Complete!": // COMPLETE
                 return AssignmentStage.COMPLETE;

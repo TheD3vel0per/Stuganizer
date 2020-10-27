@@ -52,6 +52,27 @@ public enum AssignmentStage {
      * Percentage Complete: 100%
      * At this stage, the assignment is complete, nothing more needs to be done
      */
-    COMPLETE
+    COMPLETE;
+
+    @Override
+    public String toString() {
+        String name = "";
+        switch (ordinal()) {
+            case 0: // NEED_TO_START
+                return "Need to Start";
+            case 1: // STARTED
+                return "Started";
+            case 2: // HALFWAY
+                return "Halfway";
+            case 3: // REVIEW
+                return "Review";
+            case 4: // SUBMIT
+                return "Send to Submit";
+            case 5: // COMPLETE
+                return "Complete!";
+            default:
+                return "";
+        }
+    }
 
 }

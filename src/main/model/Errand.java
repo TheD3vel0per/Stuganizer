@@ -67,7 +67,8 @@ public class Errand extends Task {
     }
 
     /**
-     * EFFECTS: Marks the Errand as completed
+     * MODIFIES: this
+     * EFFECTS : Marks the Errand as completed
      */
     public void markCompleted() {
         this.hasBeenCompleted = true;

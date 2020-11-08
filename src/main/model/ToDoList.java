@@ -163,7 +163,7 @@ public class ToDoList implements JsonifiableObject {
                 break;
             }
 
-            if (!(task.getClass() == Examinable.class && task.getCompleteByDate().isEqual(LocalDate.now()))) {
+            if (!(task.getClass() == Examinable.class && !task.getCompleteByDate().isEqual(LocalDate.now()))) {
                 tasksToday.add(task);
                 collectablePoints += task.getPoints();
             }

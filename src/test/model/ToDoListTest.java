@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.CannotStageTask;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -60,6 +61,8 @@ public class ToDoListTest {
     @Test()
     public void testEmpty() {
         assertEquals(this.errandList, this.toDoList.getErrandList());
+        assertEquals(this.assignmentList, this.toDoList.getAssignmentList());
+        assertEquals(this.examinableList, this.toDoList.getExaminableList());
         assertEquals(0, this.toDoList.getTasksForToday().size());
         assertEquals(0, this.toDoList.getAllTasks().size());
     }
@@ -108,6 +111,60 @@ public class ToDoListTest {
         assertEquals(1, this.toDoList.getTasksForToday().size());
         assertEquals(assignment, this.toDoList.getAllTasks().get(0));
         assertEquals(1, this.toDoList.getAllTasks().size());
+        assertEquals(0, this.toDoList.getPointsAwarded());
+    }
+
+    @Test()
+    public void testOneExaminableToday() {
+        Examinable examinable = new Examinable("Test Examinable");
+        //examinable.setCompleteByDate(LocalDate.ofEpochDay(LocalDate.now().toEpochDay() + 1));
+        examinable.setCompleteByDate(LocalDate.now());
+        examinableList.add(examinable);
+
+        assertEquals(examinable, this.toDoList.getTasksForToday().get(0));
+        assertEquals(1, this.toDoList.getTasksForToday().size());
+        assertEquals(examinable, this.toDoList.getAllTasks().get(0));
+        assertEquals(1, this.toDoList.getAllTasks().size());
+        assertEquals(0, this.toDoList.getPointsAwarded());
+
+        try {
+            examinable.markCompleted();
+            this.toDoList.markTaskCompleted(examinable);
+        } catch (CannotStageTask cannotStageTask) {
+            fail("CannotStageTask should not have been thrown");
+        }
+
+        assertEquals(examinable, this.toDoList.getTasksForToday().get(0));
+        assertEquals(1, this.toDoList.getTasksForToday().size());
+        assertEquals(examinable, this.toDoList.getAllTasks().get(0));
+        assertEquals(1, this.toDoList.getAllTasks().size());
+        assertEquals(examinable, this.toDoList.getTasksCompletedToday().get(0));
+        assertEquals(1, this.toDoList.getTasksCompletedToday().size());
+        assertEquals(Task.MIN_POINTS, this.toDoList.getPointsAwarded());
+    }
+
+    @Test()
+    public void testOneExaminableNotToday() {
+        Examinable examinable = new Examinable("Test Examinable");
+        examinable.setCompleteByDate(LocalDate.ofEpochDay(LocalDate.now().toEpochDay() + 1));
+        examinableList.add(examinable);
+
+        assertEquals(0, this.toDoList.getTasksForToday().size());
+        assertEquals(1, this.toDoList.getAllTasks().size());
+        assertEquals(examinable, this.toDoList.getAllTasks().get(0));
+        assertEquals(0, this.toDoList.getPointsAwarded());
+
+        try {
+            examinable.markCompleted();
+            fail("CannotStageTask should not have been thrown");
+        } catch (CannotStageTask cannotStageTask) {
+            assertFalse(this.toDoList.markTaskCompleted(examinable));
+        }
+
+        assertEquals(0, this.toDoList.getTasksForToday().size());
+        assertEquals(1, this.toDoList.getAllTasks().size());
+        assertEquals(examinable, this.toDoList.getAllTasks().get(0));
+        assertEquals(0, this.toDoList.getTasksCompletedToday().size());
         assertEquals(0, this.toDoList.getPointsAwarded());
     }
 

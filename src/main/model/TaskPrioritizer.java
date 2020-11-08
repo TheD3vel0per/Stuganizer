@@ -15,8 +15,9 @@ import java.util.Comparator;
  *  2. If a task has a closer due dates
  *  3. How many points a task awards (more points: higher priority)
  *  4. The type of task (first being higher priority)
- *    a. Assignment
- *    b. Errand
+ *    a. Examinable
+ *    b. Assignment
+ *    c. Errand
  *
  * For the fourth point above, there is only one type of task in the
  * application right now, a different priority order will be set when more
@@ -90,6 +91,9 @@ public class TaskPrioritizer implements Comparator<Task> {
      */
     public int compareTaskType(Task a, Task b) {
         // Sort by priority, as listed above
+        if (a.getClass() == Examinable.class && b.getClass() != Examinable.class) {
+            return -1;
+        }
         if (a.getClass() == Assignment.class && b.getClass() != Assignment.class) {
             return -1;
         }

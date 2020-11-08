@@ -1,7 +1,6 @@
 package persistence;
 
 import model.*;
-import org.json.JSONObject;
 
 import java.time.LocalDate;
 
@@ -65,5 +64,17 @@ public class JsonTest {
         assignmentList.add(assignment);
 
         return assignmentList;
+    }
+
+    protected ExaminableList genExaminableList() {
+        ExaminableList examinableList = new ExaminableList();
+
+        Examinable examinable = new Examinable("CPSC 210 Midterm");
+        examinable.setCompleteByDate(LocalDate.parse("2021-11-18"));
+        examinable.setPoints(4);
+        examinable.setDescription("I need to do well on this exam");
+        examinableList.add(examinable);
+
+        return examinableList;
     }
 }

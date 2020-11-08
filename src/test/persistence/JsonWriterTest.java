@@ -2,6 +2,7 @@ package persistence;
 
 import model.AssignmentList;
 import model.ErrandList;
+import model.ExaminableList;
 import model.ToDoList;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +36,7 @@ public class JsonWriterTest extends JsonTest {
             ToDoList toDoList = new ToDoList(5);
             toDoList.setErrandList(new ErrandList());
             toDoList.setAssignmentList(new AssignmentList());
+            toDoList.setExaminableList(new ExaminableList());
             JsonWriter writer = new JsonWriter("./data/test_writerEmptyWorkroom.json");
             writer.open();
             writer.write(toDoList);
@@ -58,6 +60,7 @@ public class JsonWriterTest extends JsonTest {
             ToDoList toDoList = new ToDoList(10);
             toDoList.setErrandList(this.genErrandList());
             toDoList.setAssignmentList(this.genAssignmentList());
+            toDoList.setExaminableList(this.genExaminableList());
             JsonWriter writer = new JsonWriter("./data/test_writerGeneralWorkroom.json");
             writer.open();
             writer.write(toDoList);

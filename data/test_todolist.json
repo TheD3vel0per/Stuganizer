@@ -20,5 +20,12 @@
         "completed": true,
         "title": "Clean the Kitchen",
         "points": 3
+    }],
+    "examinableList": [{
+        "completeByDate": "2021-11-18",
+        "description": "I need to do well on this exam",
+        "completed": false,
+        "title": "Clean the Kitchen",
+        "points": 4
     }]
 }

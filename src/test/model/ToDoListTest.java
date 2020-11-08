@@ -15,6 +15,7 @@ public class ToDoListTest {
     private ToDoList toDoList;
     private ErrandList errandList;
     private AssignmentList assignmentList;
+    private ExaminableList examinableList;
     private final int pointsPerDay = 10;
     private Random random;
 
@@ -24,8 +25,10 @@ public class ToDoListTest {
         this.toDoList = new ToDoList(this.pointsPerDay);
         this.errandList = new ErrandList();
         this.assignmentList = new AssignmentList();
+        this.examinableList = new ExaminableList();
         this.toDoList.setErrandList(this.errandList);
         this.toDoList.setAssignmentList(this.assignmentList);
+        this.toDoList.setExaminableList(this.examinableList);
     }
 
     public ArrayList<Errand> addErrandToErrandList(int quantity) {

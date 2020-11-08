@@ -59,6 +59,7 @@ public class ToDoList implements JsonifiableObject {
 
     private ErrandList errandList;
     private AssignmentList assignmentList;
+    private ExaminableList examinableList;
 
     /**
      * REQUIRES: Integer supplied must in the domain of [Task.MAX_POINTS, Integer.MAX_VALUE]
@@ -109,6 +110,14 @@ public class ToDoList implements JsonifiableObject {
     }
 
     /**
+     * MODIFIES: this
+     * EFFECTS : Attaches the given examinable list to the to do list
+     */
+    public void setExaminableList(ExaminableList examinableList) {
+        this.examinableList = examinableList;
+    }
+
+    /**
      * EFFECTS: Gets the errand list associated with the to do list
      */
     public ErrandList getErrandList() {
@@ -120,6 +129,13 @@ public class ToDoList implements JsonifiableObject {
      */
     public AssignmentList getAssignmentList() {
         return this.assignmentList;
+    }
+
+    /**
+     * EFFECTS: Gets the assignment list associated with the to do list
+     */
+    public ExaminableList getExaminableList() {
+        return this.examinableList;
     }
 
     /**
@@ -147,8 +163,10 @@ public class ToDoList implements JsonifiableObject {
                 break;
             }
 
-            tasksToday.add(task);
-            collectablePoints += task.getPoints();
+            if (!(task.getClass() == Examinable.class && task.getCompleteByDate().isEqual(LocalDate.now()))) {
+                tasksToday.add(task);
+                collectablePoints += task.getPoints();
+            }
         }
 
         return tasksToday;
@@ -171,6 +189,13 @@ public class ToDoList implements JsonifiableObject {
             Assignment assignment = this.assignmentList.get(i);
             if (assignment != Assignment.NULL_ASSIGNMENT) {
                 tasks.add(assignment);
+            }
+        }
+
+        for (int i = 0; i <= this.examinableList.maxIndex(); i++) {
+            Examinable examinable = this.examinableList.get(i);
+            if (examinable != Examinable.NULL_EXAMINABLE) {
+                tasks.add(examinable);
             }
         }
         return tasks;
@@ -219,6 +244,7 @@ public class ToDoList implements JsonifiableObject {
         jsonObject.put("pointsPerDay",this.pointsPerDay);
         jsonObject.put("errandList", this.errandList.toJson());
         jsonObject.put("assignmentList", this.assignmentList.toJson());
+        jsonObject.put("examinableList", this.examinableList.toJson());
         return jsonObject;
     }
 }

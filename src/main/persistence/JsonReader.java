@@ -1,6 +1,7 @@
 package persistence;
 
 import model.*;
+import model.exceptions.CannotStageTask;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -55,6 +56,7 @@ public class JsonReader {
         ToDoList toDoList = new ToDoList(pointsPerDay);
         toDoList.setAssignmentList(extractAssignments(jsonObject));
         toDoList.setErrandList(extractErrands(jsonObject));
+        toDoList.setExaminableList(extractExaminables(jsonObject));
         return toDoList;
     }
 
@@ -103,5 +105,34 @@ public class JsonReader {
             errand.markCompleted();
         }
         return errand;
+    }
+
+    // EFFECTS : parses errands from JSON object and returns the errand list
+    private ExaminableList extractExaminables(JSONObject jsonObject) {
+        ExaminableList examinableList = new ExaminableList();
+        JSONArray jsonArray = jsonObject.getJSONArray("examinableList");
+        for (Object json : jsonArray) {
+            JSONObject nextExaminable = (JSONObject) json;
+            examinableList.add(extractExaminable(nextExaminable));
+        }
+        return examinableList;
+    }
+
+    // EFFECTS: parses errand from JSON object and returns it
+    private Examinable extractExaminable(JSONObject jsonObject) {
+        Examinable examinable = new Examinable(jsonObject.getString("title"));
+        examinable.setDescription(jsonObject.getString("description"));
+        examinable.setPoints(jsonObject.getInt("points"));
+        examinable.setCompleteByDate(LocalDate.now());
+        if (jsonObject.getBoolean("completed")) {
+            try {
+                examinable.markCompleted();
+            } catch (CannotStageTask cannotStageTask) {
+                cannotStageTask.printStackTrace();
+            }
+        }
+        examinable.setCompleteByDate(LocalDate.parse(jsonObject.getString("completeByDate")));
+
+        return examinable;
     }
 }

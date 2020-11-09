@@ -1,5 +1,12 @@
 {
     "pointsPerDay": 10,
+    "examinableList": [{
+        "completeByDate": "2021-11-18",
+        "description": "I need to do well on this exam",
+        "completed": false,
+        "title": "CPSC 210 Midterm",
+        "points": 4
+    }],
     "assignmentList": [{
         "stage": "Need to Start",
         "completeByDate": "2021-12-31",

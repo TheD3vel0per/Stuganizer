@@ -1,5 +1,6 @@
 {
     "pointsPerDay": 5,
+    "examinableList": [],
     "assignmentList": [],
     "errandList": []
 }

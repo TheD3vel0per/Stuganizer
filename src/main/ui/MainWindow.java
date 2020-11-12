@@ -19,7 +19,6 @@ public class MainWindow extends JFrame {
     private JLabel pointsLabel;
     private JLabel completeByLabel;
     private JLabel stageLabel;
-    private JButton submitButton;
     private JButton stageButton;
 
     private GraphicalUserInterface gui;

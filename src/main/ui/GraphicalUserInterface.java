@@ -90,6 +90,7 @@ public class GraphicalUserInterface {
     private void setupGraphicalInterface() {
         this.setupTablePanel();
         this.mainWindow = new MainWindow(this);
+        this.mainWindow.setBounds(0, 0, 600, 400);
         this.mainWindow.setVisible(true);
     }
 

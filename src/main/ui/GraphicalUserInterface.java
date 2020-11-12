@@ -53,6 +53,7 @@ public class GraphicalUserInterface {
      */
     public void setSelectedTask(Task task) {
         this.selectedTask = task;
+        this.mainWindow.showTaskInPanel(task);
     }
 
     /**

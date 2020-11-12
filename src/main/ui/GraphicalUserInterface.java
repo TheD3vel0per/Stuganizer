@@ -7,7 +7,10 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 
-public class GraphicalUserInterface extends JFrame {
+/**
+ * https://stackoverflow.com/questions/10128064/jtable-selected-row-click-event
+ */
+public class GraphicalUserInterface {
 
     // Get context about program state
     private boolean isRunning;
@@ -15,6 +18,7 @@ public class GraphicalUserInterface extends JFrame {
     private ErrandList errandList;
     private AssignmentList assignmentList;
     private ExaminableList examinableList;
+    private Task selectedTask;
 
     // JSON saving stuff
     private JsonReader jsonReader;
@@ -22,7 +26,7 @@ public class GraphicalUserInterface extends JFrame {
     private static final String JSON_STORE = "./data/todolist.json";
 
     // Gui variables
-    private JSplitPane splitPane;
+    private MainWindow mainWindow;
 
     // Table and relevant variables
     private JTable table;
@@ -33,9 +37,22 @@ public class GraphicalUserInterface extends JFrame {
      * EFFECTS : instiantiates the window
      */
     public GraphicalUserInterface() {
-        super("Stuganizer");
         this.setupApplicationState();
         this.setupGraphicalInterface();
+    }
+
+    /**
+     * EFFECTS: Returns the data table model
+     */
+    public ToDoListTableModel getTableModel() {
+        return this.tableModel;
+    }
+
+    /**
+     * EFFECTS: Set selected task
+     */
+    public void setSelectedTask(Task task) {
+        this.selectedTask = task;
     }
 
     /**
@@ -66,15 +83,21 @@ public class GraphicalUserInterface extends JFrame {
     }
 
     /**
-     * Setup the graphical interface of the application
+     * MODIFIES: this
+     * EFFECTS : Sets up the graphical interface of the application
      */
     private void setupGraphicalInterface() {
+        this.setupTablePanel();
+        this.mainWindow = new MainWindow(this);
+        this.mainWindow.setVisible(true);
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS : Sets up the table for the top panel
+     */
+    private void setupTablePanel() {
         this.tableModel = new ToDoListTableModel(this.toDoList);
-        this.table = new JTable(this.tableModel);
-        this.splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, this.table, new JPanel());
-        this.setContentPane(this.splitPane);
-        this.pack();
-        this.setVisible(true);
     }
 
     /**

@@ -27,6 +27,14 @@ public class ToDoListTableModel extends AbstractTableModel {
 
     /**
      * MODIFIES: this
+     * EFFECTS : Returns the task located at the given row
+     */
+    public Task getTask(int index) {
+        return this.tasksList.get(index - 1);
+    }
+
+    /**
+     * MODIFIES: this
      * EFFECTS : refreshes the data in the table
      */
     public void refresh() {

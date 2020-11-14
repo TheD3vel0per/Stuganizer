@@ -4,6 +4,7 @@ import model.Assignment;
 import model.Errand;
 import model.Examinable;
 import model.Task;
+import model.exceptions.CannotStageTask;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -27,6 +28,28 @@ public class MainWindow extends JFrame {
         super("Stuganizer");
         this.gui = gui;
         this.setContentPane(this.mainPanel);
+        stageButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Task task = gui.getSelectedTask();
+                switch (task.getClass()) {
+                    case Errand.class:
+                        ((Errand) task).markCompleted();
+                        break;
+                    case Assignment.class:
+                        ((Assignment) task).stageForward();
+                        break;
+                    case Examinable.class:
+                        try {
+                            ((Examinable) task).markCompleted();
+                        } catch (CannotStageTask cannotStageTask) {
+                            // TODO show dialog to stage on another day
+                        }
+                        break;
+                }
+                super.mouseClicked(e);
+            }
+        });
     }
 
     /**

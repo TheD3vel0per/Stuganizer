@@ -62,7 +62,7 @@ public class ToDoList implements JsonifiableObject {
     private ExaminableList examinableList;
 
     /**
-     * REQUIRES: Integer supplied must in the domain of [Task.MAX_POINTS, Integer.MAX_VALUE]
+     * REQUIRES: pointsPerDay >= 1
      * MODIFIES: this
      * EFFECTS : Instantiates a new to do list with the goal of the given integer of points per day
      */
@@ -91,6 +91,15 @@ public class ToDoList implements JsonifiableObject {
             }
         }
         return pointsAwarded;
+    }
+
+    /**
+     * REQUIRES: pointsPerDay >= 1
+     * MODIFIES: this
+     * EFFECTS : Sets the amount of points per day this to do list must accomplish
+     */
+    public void setPointsPerDay(int pointsPerDay) {
+        this.pointsPerDay = pointsPerDay;
     }
 
     /**

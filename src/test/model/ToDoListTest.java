@@ -59,6 +59,13 @@ public class ToDoListTest {
     }
 
     @Test()
+    public void testPointGetterSetter() {
+        int pointsPerDay = this.random.nextInt();
+        this.toDoList.setPointsPerDay(pointsPerDay);
+        assertEquals(pointsPerDay, this.toDoList.getPointsPerDay());
+    }
+
+    @Test()
     public void testEmpty() {
         assertEquals(this.errandList, this.toDoList.getErrandList());
         assertEquals(this.assignmentList, this.toDoList.getAssignmentList());

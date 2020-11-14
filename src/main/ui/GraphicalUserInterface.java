@@ -38,7 +38,6 @@ public class GraphicalUserInterface {
      */
     public GraphicalUserInterface() {
         this.setupApplicationState();
-        this.setupGraphicalInterface();
     }
 
     /**
@@ -49,11 +48,19 @@ public class GraphicalUserInterface {
     }
 
     /**
-     * EFFECTS: Set selected task
+     * MODIFIES: this
+     * EFFECTS : Set selected task
      */
     public void setSelectedTask(Task task) {
         this.selectedTask = task;
         this.mainWindow.showTaskInPanel(task);
+    }
+
+    /**
+     * EFFECTS: returns the current selected task
+     */
+    public Task getSelectedTask() {
+        return this.selectedTask;
     }
 
     /**
@@ -65,29 +72,33 @@ public class GraphicalUserInterface {
         this.jsonReader = new JsonReader(JSON_STORE);
         try {
             this.toDoList = this.jsonReader.read();
+            this.errandList = this.toDoList.getErrandList();
+            this.assignmentList = this.toDoList.getAssignmentList();
+            this.examinableList = this.toDoList.getExaminableList();
+            this.setupGraphicalInterface();
         } catch (Exception exception) {
-            this.toDoList = new ToDoList(this.askPointsPerDay());
-            this.toDoList.setErrandList(new ErrandList());
-            this.toDoList.setAssignmentList(new AssignmentList());
-            this.toDoList.setExaminableList(new ExaminableList());
+            this.toDoList = new ToDoList(1);
+            this.askPointsPerDay();
+            this.errandList = this.toDoList.getErrandList();
+            this.assignmentList = this.toDoList.getAssignmentList();
+            this.examinableList = this.toDoList.getExaminableList();
         }
-        this.errandList = this.toDoList.getErrandList();
-        this.assignmentList = this.toDoList.getAssignmentList();
-        this.examinableList = this.toDoList.getExaminableList();
     }
 
     /**
      * EFFECTS: Prompts the user how many points they'd like to complete in a day
      */
-    private int askPointsPerDay() {
-        return 10;
+    private void askPointsPerDay() {
+        PointChooser pointChooser = new PointChooser(this.toDoList, this);
+        pointChooser.pack();
+        pointChooser.setVisible(true);
     }
 
     /**
      * MODIFIES: this
      * EFFECTS : Sets up the graphical interface of the application
      */
-    private void setupGraphicalInterface() {
+    public void setupGraphicalInterface() {
         this.setupTablePanel();
         this.mainWindow = new MainWindow(this);
         this.mainWindow.setBounds(0, 0, 600, 400);
@@ -118,5 +129,6 @@ public class GraphicalUserInterface {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
+        System.exit(0);
     }
 }

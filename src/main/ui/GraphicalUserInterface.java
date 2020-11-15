@@ -49,11 +49,19 @@ public class GraphicalUserInterface {
 
     /**
      * MODIFIES: this
+     * EFFECTS : Refreshes the bottom portion of the screen
+     */
+    public void refreshPanel() {
+        this.mainWindow.showTaskInPanel(this.selectedTask);
+    }
+
+    /**
+     * MODIFIES: this
      * EFFECTS : Set selected task
      */
     public void setSelectedTask(Task task) {
         this.selectedTask = task;
-        this.mainWindow.showTaskInPanel(task);
+        this.refreshPanel();
     }
 
     /**

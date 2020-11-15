@@ -32,21 +32,20 @@ public class MainWindow extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Task task = gui.getSelectedTask();
-                switch (task.getClass()) {
-                    case Errand.class:
-                        ((Errand) task).markCompleted();
-                        break;
-                    case Assignment.class:
-                        ((Assignment) task).stageForward();
-                        break;
-                    case Examinable.class:
-                        try {
-                            ((Examinable) task).markCompleted();
-                        } catch (CannotStageTask cannotStageTask) {
-                            // TODO show dialog to stage on another day
-                        }
-                        break;
+                if (Errand.class.equals(task.getClass())) {
+                    ((Errand) task).markCompleted();
+                } else if (Assignment.class.equals(task.getClass())) {
+                    ((Assignment) task).stageForward();
+                } else if (Examinable.class.equals(task.getClass())) {
+                    try {
+                        ((Examinable) task).markCompleted();
+                    } catch (CannotStageTask cannotStageTask) {
+                        InfoDialog dialog = new InfoDialog("You cannot stage the task forward forward right now!");
+                        dialog.pack();
+                        dialog.setVisible(true);
+                    }
                 }
+                gui.refreshPanel();
                 super.mouseClicked(e);
             }
         });

@@ -7,6 +7,9 @@ public class TaskMakerDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
+    private JTextField textField1;
+    private JTextArea descriptionArea;
+    private JSpinner pointsSpinner;
 
     public TaskMakerDialog() {
         setContentPane(contentPane);

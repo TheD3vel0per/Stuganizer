@@ -7,7 +7,6 @@ import model.Task;
 import model.exceptions.CannotStageTask;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -20,7 +19,7 @@ public class MainWindow extends JFrame {
     private JLabel pointsLabel;
     private JLabel completeByLabel;
     private JLabel stageLabel;
-    private JButton stageButton;
+    private JButton stageForwardButton;
     private JButton saveExitButton;
     private JButton examinableButton;
     private JButton assignmentButton;
@@ -52,7 +51,7 @@ public class MainWindow extends JFrame {
      * EFFECTS : Sets up the event listener for the staging button
      */
     private void setupStagingButton() {
-        stageButton.addMouseListener(new MouseAdapter() {
+        stageForwardButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Task task = gui.getSelectedTask();

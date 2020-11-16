@@ -32,6 +32,26 @@ public class MainWindow extends JFrame {
         super("Stuganizer");
         this.gui = gui;
         this.setContentPane(this.mainPanel);
+        this.setupStagingButton();
+        this.setupErrandButton();
+        this.setupAssignmentButton();
+        this.setupExaminableButton();
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS : Manually instantiates the data table in the UI
+     */
+    private void createUIComponents() {
+        this.dataTable = new JTable(this.gui.getTableModel());
+        dataTable.addMouseListener(new TableMouseEvent(gui, dataTable));
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS : Sets up the event listener for the staging button
+     */
+    private void setupStagingButton() {
         stageButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -55,11 +75,41 @@ public class MainWindow extends JFrame {
 
     /**
      * MODIFIES: this
-     * EFFECTS : Manually instantiates the data table in the UI
+     * EFFECTS : Sets up the event listener for the errand button
      */
-    private void createUIComponents() {
-        this.dataTable = new JTable(this.gui.getTableModel());
-        dataTable.addMouseListener(new TableMouseEvent(gui, dataTable));
+    private void setupErrandButton() {
+        errandButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS : Sets up the event listener for the errand button
+     */
+    private void setupAssignmentButton() {
+        assignmentButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS : Sets up the event listener for the errand button
+     */
+    private void setupExaminableButton() {
+        examinableButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });
     }
 
     /**

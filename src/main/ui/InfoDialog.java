@@ -16,6 +16,7 @@ public class InfoDialog extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
 
         this.message = message;
+        this.messageLabel.setText(this.message);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -27,10 +28,5 @@ public class InfoDialog extends JDialog {
     private void onOK() {
         // add your code here
         dispose();
-    }
-
-    private void createUIComponents() {
-        this.messageLabel = new JLabel();
-        this.messageLabel.setText(this.message);
     }
 }

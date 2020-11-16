@@ -21,6 +21,10 @@ public class MainWindow extends JFrame {
     private JLabel completeByLabel;
     private JLabel stageLabel;
     private JButton stageButton;
+    private JButton saveExitButton;
+    private JButton examinableButton;
+    private JButton assignmentButton;
+    private JButton errandButton;
 
     private GraphicalUserInterface gui;
 
@@ -40,9 +44,7 @@ public class MainWindow extends JFrame {
                     try {
                         ((Examinable) task).markCompleted();
                     } catch (CannotStageTask cannotStageTask) {
-                        InfoDialog dialog = new InfoDialog("You cannot stage the task forward forward right now!");
-                        dialog.pack();
-                        dialog.setVisible(true);
+                        showAlert("You cannot stage an Examinable forward today!");
                     }
                 }
                 gui.refreshPanel();
@@ -59,6 +61,24 @@ public class MainWindow extends JFrame {
         this.dataTable = new JTable(this.gui.getTableModel());
         dataTable.addMouseListener(new TableMouseEvent(gui, dataTable));
     }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS : Refreshes the table
+     */
+    public void refreshTable() {
+        this.createUIComponents();
+    }
+
+    /**
+     * EFFECTS: Shows error dialog box
+     */
+    private void showAlert(String message) {
+        InfoDialog dialog = new InfoDialog(message);
+        dialog.pack();
+        dialog.setVisible(true);
+    }
+
 
     /**
      * MODIFIES: this

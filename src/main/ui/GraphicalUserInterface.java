@@ -48,6 +48,21 @@ public class GraphicalUserInterface {
     }
 
     /**
+     * EFFECTS: Returns the ToDoList
+     */
+    public ToDoList getToDoList() {
+        return this.toDoList;
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS : Refreshes the top portion of the screen (table)
+     */
+    public void refreshTable() {
+        this.setupTablePanel();
+    }
+
+    /**
      * MODIFIES: this
      * EFFECTS : Refreshes the bottom portion of the screen
      */

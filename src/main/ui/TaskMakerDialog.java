@@ -38,7 +38,13 @@ public class TaskMakerDialog extends JDialog {
                 onOK();
             }
         });
+    }
 
+    /**
+     * MODIFIES: this
+     * EFFECTS : Sets up the event handlers for the cancel button
+     */
+    private void setupCancelButton() {
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
@@ -60,6 +66,7 @@ public class TaskMakerDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+
 
     /**
      * MODIFIES: this

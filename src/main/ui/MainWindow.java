@@ -80,6 +80,9 @@ public class MainWindow extends JFrame {
         errandButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                TaskMakerDialog dialog = new TaskMakerDialog(gui, Errand.class);
+                dialog.pack();
+                dialog.setVisible(true);
                 super.mouseClicked(e);
             }
         });
@@ -87,12 +90,15 @@ public class MainWindow extends JFrame {
 
     /**
      * MODIFIES: this
-     * EFFECTS : Sets up the event listener for the errand button
+     * EFFECTS : Sets up the event listener for the assignment button
      */
     private void setupAssignmentButton() {
         assignmentButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                TaskMakerDialog dialog = new TaskMakerDialog(gui, Assignment.class);
+                dialog.pack();
+                dialog.setVisible(true);
                 super.mouseClicked(e);
             }
         });
@@ -100,12 +106,15 @@ public class MainWindow extends JFrame {
 
     /**
      * MODIFIES: this
-     * EFFECTS : Sets up the event listener for the errand button
+     * EFFECTS : Sets up the event listener for the examinable button
      */
     private void setupExaminableButton() {
         examinableButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                TaskMakerDialog dialog = new TaskMakerDialog(gui, Examinable.class);
+                dialog.pack();
+                dialog.setVisible(true);
                 super.mouseClicked(e);
             }
         });

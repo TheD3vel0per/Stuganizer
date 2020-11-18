@@ -44,7 +44,8 @@ public class ToDoListTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return this.toDoList.getAllTasks().size();
+        this.refresh();
+        return this.tasksList.size() + 1;
     }
 
     @Override

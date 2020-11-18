@@ -5,7 +5,12 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.FileNotFoundException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioSystem;
 
 /**
  * https://stackoverflow.com/questions/10128064/jtable-selected-row-click-event
@@ -143,6 +148,7 @@ public class GraphicalUserInterface {
      * https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/ui/WorkRoomApp.java
      */
     public void saveToFileSystemAndClose() {
+        playGoodbyeSound();
         try {
             jsonWriter.open();
             jsonWriter.write(this.toDoList);
@@ -153,5 +159,20 @@ public class GraphicalUserInterface {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
         System.exit(0);
+    }
+
+    /**
+     * EFFECTS: Plays the goodbye sound
+     */
+    private void playGoodbyeSound() {
+        try {
+            File audioFile = new File("./data/quitbtn.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile.getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+        }
     }
 }

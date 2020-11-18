@@ -151,6 +151,10 @@ public class TaskMakerDialog extends JDialog {
         this.gui.refreshTable();
     }
 
+    /**
+     * MODIFIES: this
+     * EFFECTS : Instantiates the spinner component
+     */
     private void createUIComponents() {
         SpinnerNumberModel spinnerModel = new SpinnerNumberModel();
         spinnerModel.setValue(Task.MIN_POINTS);

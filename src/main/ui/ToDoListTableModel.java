@@ -42,17 +42,26 @@ public class ToDoListTableModel extends AbstractTableModel {
         this.tasksList.sort(new TaskPrioritizer());
     }
 
+    /**
+     * EFFECTS: Returns the quantity of rows in this table
+     */
     @Override
     public int getRowCount() {
         this.refresh();
         return this.tasksList.size() + 1;
     }
 
+    /**
+     * EFFECTS: Returns the quantity of columns in this table
+     */
     @Override
     public int getColumnCount() {
         return 3;
     }
 
+    /**
+     * EFFECTS: Returns the entry located at the given row and column
+     */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (rowIndex == 0) {

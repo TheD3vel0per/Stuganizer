@@ -10,6 +10,10 @@ public class InfoDialog extends JDialog {
     private JLabel messageLabel;
     private String message;
 
+    /**
+     * MODIFIES: this
+     * EFFECTS : Instantiates the Info dialog and shows the message
+     */
     public InfoDialog(String message) {
         setContentPane(contentPane);
         setModal(true);
@@ -25,6 +29,9 @@ public class InfoDialog extends JDialog {
         });
     }
 
+    /**
+     * EFFECTS: Closes the dialog when the okay button is pressed
+     */
     private void onOK() {
         // add your code here
         dispose();

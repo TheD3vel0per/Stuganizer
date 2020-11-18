@@ -18,6 +18,11 @@ public class PointChooser extends JDialog {
     private ToDoList toDoList;
     private GraphicalUserInterface gui;
 
+    /**
+     * MODIFIES: this
+     * EFFECTS : Instantiates the point chooser, and prompts the user to select how many
+     *           points they'd like to accomplish per day
+     */
     public PointChooser(ToDoList toDoList, GraphicalUserInterface gui) {
         this.toDoList = toDoList;
         this.gui = gui;
@@ -33,6 +38,10 @@ public class PointChooser extends JDialog {
         });
     }
 
+    /**
+     * MODIFIES: this, this.toDoList
+     * EFFECTS : Sets the quantity of points per day, when the points button is pressed
+     */
     private void onOK() {
         // add your code here
         this.toDoList.setPointsPerDay((int) this.pointsSpinner.getValue());
@@ -43,6 +52,10 @@ public class PointChooser extends JDialog {
         dispose();
     }
 
+    /**
+     * MODIFIES: this
+     * EFFECTS : Instantiates the spinner component
+     */
     private void createUIComponents() {
         SpinnerNumberModel spinnerModel = new SpinnerNumberModel();
         spinnerModel.setValue(1);

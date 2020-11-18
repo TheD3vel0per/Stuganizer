@@ -27,6 +27,10 @@ public class MainWindow extends JFrame {
 
     private GraphicalUserInterface gui;
 
+    /**
+     * MODIFIES: this
+     * EFFECTS : Instantiates the graphical user interface
+     */
     public MainWindow(GraphicalUserInterface gui) {
         super("Stuganizer");
         this.gui = gui;

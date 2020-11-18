@@ -24,6 +24,7 @@ public class MainWindow extends JFrame {
     private JButton examinableButton;
     private JButton assignmentButton;
     private JButton errandButton;
+    private JButton stageBackwardButton;
 
     private GraphicalUserInterface gui;
 
@@ -35,11 +36,12 @@ public class MainWindow extends JFrame {
         super("Stuganizer");
         this.gui = gui;
         this.setContentPane(this.mainPanel);
-        this.setupStagingButton();
+        this.setupStageForwardButton();
         this.setupErrandButton();
         this.setupAssignmentButton();
         this.setupExaminableButton();
         this.setupSaveAndExitButton();
+        this.setupStageBackwardButton();
     }
 
     /**
@@ -53,9 +55,9 @@ public class MainWindow extends JFrame {
 
     /**
      * MODIFIES: this
-     * EFFECTS : Sets up the event listener for the staging button
+     * EFFECTS : Sets up the event listener for the staging forward button
      */
-    private void setupStagingButton() {
+    private void setupStageForwardButton() {
         stageForwardButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -70,6 +72,28 @@ public class MainWindow extends JFrame {
                     } catch (CannotStageTask cannotStageTask) {
                         showAlert("You cannot stage an Examinable forward today!");
                     }
+                }
+                gui.refreshPanel();
+                super.mouseClicked(e);
+            }
+        });
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS : Sets up the event listener for the staging backwards button
+     */
+    private void setupStageBackwardButton() {
+        stageBackwardButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Task task = gui.getSelectedTask();
+                if (Errand.class.equals(task.getClass())) {
+                    showAlert("You cannot stage an Errand backward!");
+                } else if (Assignment.class.equals(task.getClass())) {
+                    ((Assignment) task).stageBackward();
+                } else if (Examinable.class.equals(task.getClass())) {
+                    showAlert("You cannot stage an Examinable backward!");
                 }
                 gui.refreshPanel();
                 super.mouseClicked(e);

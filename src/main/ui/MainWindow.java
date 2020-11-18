@@ -39,6 +39,7 @@ public class MainWindow extends JFrame {
         this.setupErrandButton();
         this.setupAssignmentButton();
         this.setupExaminableButton();
+        this.setupSaveAndExitButton();
     }
 
     /**
@@ -119,6 +120,20 @@ public class MainWindow extends JFrame {
                 TaskMakerDialog dialog = new TaskMakerDialog(gui, Examinable.class);
                 dialog.pack();
                 dialog.setVisible(true);
+                super.mouseClicked(e);
+            }
+        });
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS : Sets up the event listener for the save and exit button
+     */
+    private void setupSaveAndExitButton() {
+        saveExitButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                gui.saveToFileSystemAndClose();
                 super.mouseClicked(e);
             }
         });

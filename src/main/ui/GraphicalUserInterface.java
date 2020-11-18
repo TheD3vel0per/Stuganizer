@@ -142,7 +142,7 @@ public class GraphicalUserInterface {
      * Implementation taken from
      * https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/ui/WorkRoomApp.java
      */
-    private void saveToFileSystemAndClose() {
+    public void saveToFileSystemAndClose() {
         try {
             jsonWriter.open();
             jsonWriter.write(this.toDoList);

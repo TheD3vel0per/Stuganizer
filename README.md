@@ -30,3 +30,4 @@ As a user I want to be able to ...
  (Complete in Phase 2!)
  * Add quizzes/tests/exams for a particular day (Complete in Phase 2)
  * View what quizzes/tests/exams I have to do for today (Complete in Phase 2)
+ * Not allowing tasks to be stage forward if they don't fit the circumstances. (Completed before Phase 4). 

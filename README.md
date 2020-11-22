@@ -28,5 +28,5 @@ As a user I want to be able to ...
  * Add an assignment to my board (Complete in Phase 2!)
  * Stage the progress my assignments (to do, doing, under review, to submit, complete etc.) on the Kanban board 
  (Complete in Phase 2!)
- * Add quizzes/tests/exams for a particular day
- * View what quizzes/tests/exams I have to do for today
+ * Add quizzes/tests/exams for a particular day (Complete in Phase 2)
+ * View what quizzes/tests/exams I have to do for today (Complete in Phase 2)

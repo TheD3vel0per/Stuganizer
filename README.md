@@ -15,7 +15,7 @@ dealing with different courses and errands. Something like an essay may need sev
 and review. Whereas something like buying groceries will only have two states: to do and done. Exams also cannot be
 completed in advance, they can only be done on a specific date.
 
-## User Stories  
+## User Stories
 As a user I want to be able to ...  
  * View what I have to do for the day (Completed in Phase 1!)
  * Set how many points I'd like to accomplish per day (Completed in Phase 1!)
@@ -30,4 +30,11 @@ As a user I want to be able to ...
  (Complete in Phase 2!)
  * Add quizzes/tests/exams for a particular day (Complete in Phase 2)
  * View what quizzes/tests/exams I have to do for today (Complete in Phase 2)
- * Not allowing tasks to be stage forward if they don't fit the circumstances. (Completed before Phase 4). 
+ * Not allowing tasks to be stage forward if they don't fit the circumstances. (Completed before Phase 4).
+ 
+## Phase 4: Task 3
+I would probably create an abstract class `TaskList` and then use that as a basis for `ErrandList`, `AssignmentList`,
+and `ExaminableList` or just abandon them and insert them inside the to-do list. I originally planned to be able to
+view all of them separately and then all together. But I didn't have enough time to do it, so doing just a ToDoList 
+would probably be enough, however having it separated gives me flexibility if I work on this project after the course is
+finished.

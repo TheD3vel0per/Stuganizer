@@ -32,7 +32,6 @@ public class Examinable extends Task {
     public static Examinable NULL_EXAMINABLE = new Examinable("NULL");
 
     /**
-     * REQUIRES: title string length must be larger than 0
      * MODIFIES: this
      * EFFECTS : Instantiates a new Examinable with the given title, the minimum number of points,
      *           an empty description, and a complete by date of today
